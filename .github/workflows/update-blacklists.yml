@@ -62,5 +62,5 @@ jobs:
 
       - uses: ./.github/actions/commit-push
         with:
-          paths: auto/black_ass.txt blacklists blacklists_nftables blacklists_iptables blacklists_nginx blacklists_route
+          paths: auto/black_ass.txt auto/custom-vk-asn-prefixes.txt blacklists blacklists_nftables blacklists_iptables blacklists_nginx blacklists_route
           message: Update blacklists

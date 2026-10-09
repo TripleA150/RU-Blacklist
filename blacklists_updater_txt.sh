@@ -2,7 +2,8 @@
 # Builds the plain-text blacklists (blacklists/*.txt) from:
 #   - prefixes announced by ASNs whose names match lists/black-names.txt,
 #   - networks registered under the netnames in lists/ru-gov-netnames.txt,
-#   - auto/ networks whose names match lists/black-names.txt.
+#   - auto/ networks whose names match lists/black-names.txt,
+#   - your own ASNs and prefixes from lists/custom-blacklist.txt (and lists/custom-vk.txt for the VK lists).
 # Needs network access (RIPEstat API and RIPE whois). Any failure aborts the
 # run before the published files are touched, so a partial list is never written.
 
@@ -15,24 +16,40 @@ ensure_blacklist_base_dirs
 
 # match_names FILE TAG: for each line matching the black names (and not the white
 # names) print "# TAG: <line>" followed by the line's first field.
+# Temp files instead of a pipeline, so an invalid pattern aborts the run.
 match_names() {
     [ -f "$1" ] || return 0
-    { grep -iE -- "${BLACK_NAMES}" "$1" || true; } \
-        | { grep -viE -- "${WHITE_NAMES}" || true; } \
-        | awk -v tag="$2" '{ print "# " tag ": " $0 "\n" $1 }'
+    _black="$(make_tmp)"
+    _kept="$(make_tmp)"
+    grep_checked -iE -- "${BLACK_NAMES}" "$1" > "${_black}"
+    grep_checked -viE -- "${WHITE_NAMES}" "${_black}" > "${_kept}"
+    awk -v tag="$2" '{ print "# " tag ": " $0 "\n" $1 }' "${_kept}"
 }
 
 black_ass_tmp="$(make_tmp)"
 with_comments_tmp="$(make_tmp)"
+custom_vk_asns_tmp="$(make_tmp)"
+custom_vk_prefixes_tmp="$(make_tmp)"
 
-match_names "${AUTO_ALL_ASN_FILE}" "AS-Name" > "${black_ass_tmp}"
+{
+    match_names "${AUTO_ALL_ASN_FILE}" "AS-Name"
+    custom_asns "${CUSTOM_BLACKLIST_FILE}" | awk '{ print "# Custom ASN: " $1 "\n" $1 }'
+} > "${black_ass_tmp}"
 {
     "${PYTHON}" "${NETWORK_LIST_FROM_AS}" "${black_ass_tmp}"
     "${PYTHON}" "${NETWORK_LIST_FROM_NETNAME}" "${RU_GOV_NETNAMES_FILE}"
     match_names "${AUTO_ALL_V4_FILE}" "NET-Name"
     match_names "${AUTO_ALL_V6_FILE}" "NET-Name"
     match_names "${AUTO_RIPE_V4_FILE}" "NET-Name"
+    custom_prefixes "${CUSTOM_BLACKLIST_FILE}" | awk '{ print "# Custom prefix: " $1 "\n" $1 }'
 } > "${with_comments_tmp}"
+
+# Prefixes of the ASNs in lists/custom-vk.txt, used by build_vk_name_blacklists below.
+custom_asns "${CUSTOM_VK_FILE}" > "${custom_vk_asns_tmp}"
+if [ -s "${custom_vk_asns_tmp}" ]; then
+    "${PYTHON}" "${NETWORK_LIST_FROM_AS}" "${custom_vk_asns_tmp}" > "${custom_vk_prefixes_tmp}"
+fi
+publish_file "${custom_vk_prefixes_tmp}" "${AUTO_CUSTOM_VK_ASN_FILE}"
 
 # Comments are dropped here, so consumers of blacklist.txt never re-query anything.
 aggregate_to "${BLACKLIST_FILE}" --strict "${with_comments_tmp}"
