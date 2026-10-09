@@ -7,7 +7,7 @@ version = "0"
 [tool.ruff]
 line-length = 140
 target-version = "py310"
-extend-exclude = ["auto", "blacklists*", "lists"]
+extend-exclude = ["config", "data", "output"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "BLE", "EXE"]

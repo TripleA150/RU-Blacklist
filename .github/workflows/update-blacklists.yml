@@ -34,14 +34,8 @@ jobs:
       - name: Install nftables and ipset
         run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends nftables ipset
 
-      - name: Build text blacklists (RIPEstat + RIPE whois)
-        run: ./blacklists_updater_txt.sh
-      - name: Build nftables, ipset, nginx and route files
-        run: |
-          ./blacklists_updater_nftables.sh > /dev/null
-          ./blacklists_updater_iptables.sh > /dev/null
-          ./blacklists_updater_nginx.sh > /dev/null
-          ./blacklists_updater_routes.sh > /dev/null
+      - name: Build all lists (RIPEstat + RIPE whois)
+        run: scripts/build.sh
 
       - name: Load firewall files and run deploy script end to end (network namespace)
         run: sudo tests/integration/test_deploy.sh
@@ -54,13 +48,13 @@ jobs:
           [ "${SKIP_GUARD}" = "true" ] && max_shrink=1
           status=0
           for list in blacklist.txt blacklist-vk.txt; do
-            git show "HEAD:blacklists/${list}" > "${RUNNER_TEMP}/${list}" 2> /dev/null || : > "${RUNNER_TEMP}/${list}"
-            ./diff_blacklists.py "${RUNNER_TEMP}/${list}" "blacklists/${list}" --label "${list}" \
+            git show "HEAD:output/txt/${list}" > "${RUNNER_TEMP}/${list}" 2> /dev/null || : > "${RUNNER_TEMP}/${list}"
+            python -m ru_blacklist.diff "${RUNNER_TEMP}/${list}" "output/txt/${list}" --label "${list}" \
               --max-shrink "${max_shrink}" --summary "${GITHUB_STEP_SUMMARY}" > /dev/null || status=$?
           done
           exit "${status}"
 
       - uses: ./.github/actions/commit-push
         with:
-          paths: auto/black_ass.txt blacklists blacklists_nftables blacklists_iptables blacklists_nginx blacklists_route
+          paths: data/black_ass.txt output
           message: Update blacklists

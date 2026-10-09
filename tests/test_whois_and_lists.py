@@ -2,9 +2,7 @@ import socket
 
 import pytest
 
-import network_list_from_as
-import network_list_from_netname
-from pylib import whois
+from ru_blacklist import asn, netname, whois
 
 AUT_NUM = """\
 % This is the RIPE Database query service.
@@ -122,21 +120,21 @@ def test_raw_query_gives_up(monkeypatch):
 
 def test_asn_list_skips_comment_lines_and_duplicates():
     lines = ["# AS-Name: AS28709 VKONTAKTE-REGIONAL-CDN (LLC VK)", "AS28709", "as47764 extra", "AS28709", ""]
-    assert list(network_list_from_as.iter_asns(lines)) == ["AS28709", "AS47764"]
+    assert list(asn.iter_asns(lines)) == ["AS28709", "AS47764"]
 
 
 def test_extract_asses_queries_each_asn_once(tmp_path, monkeypatch, capsys):
     source = tmp_path / "black_ass.txt"
     source.write_text("# AS-Name: AS28709 X (LLC VK)\nAS28709\n# AS-Name: AS47764 VK-AS (LLC VK)\nAS47764\n", encoding="utf-8")
     calls = []
-    monkeypatch.setattr(network_list_from_as, "whois_query", lambda asn, *a: f"{asn}-NAME (Org)")
+    monkeypatch.setattr(asn, "whois_query", lambda asn, *a: f"{asn}-NAME (Org)")
 
     def fake_ripestat(endpoint, resource):
         calls.append(resource)
         return {"prefixes": [{"prefix": "87.240.128.0/18"}, {"prefix": "5.61.16.0/21"}, {"prefix": "5.61.16.0/21"}]}
 
-    monkeypatch.setattr(network_list_from_as, "ripestat", fake_ripestat)
-    network_list_from_as.extract_asses(str(source))
+    monkeypatch.setattr(asn, "ripestat", fake_ripestat)
+    asn.extract_asses(str(source))
 
     assert calls == ["AS28709", "AS47764"]
     out = capsys.readouterr().out.splitlines()
@@ -145,14 +143,14 @@ def test_extract_asses_queries_each_asn_once(tmp_path, monkeypatch, capsys):
 
 def test_netnames_are_deduplicated():
     lines = ["# comment", "netname: RSNET", "RSNET", "netname:SPEZSVYAZ", ""]
-    assert list(network_list_from_netname.iter_netnames(lines)) == ["RSNET", "SPEZSVYAZ"]
+    assert list(netname.iter_netnames(lines)) == ["RSNET", "SPEZSVYAZ"]
 
 
 def test_resolve_netname_converts_and_sorts(monkeypatch, capsys):
     monkeypatch.setattr(
-        network_list_from_netname,
+        netname,
         "whois_networks",
         lambda name: ["78.108.200.0 - 78.108.200.255", "2001:db8::/48", "78.108.192.0 - 78.108.199.255", "bad - range"],
     )
-    assert network_list_from_netname.resolve_netname("SPEZSVYAZ") == ["78.108.192.0/21", "78.108.200.0/24", "2001:db8::/48"]
+    assert netname.resolve_netname("SPEZSVYAZ") == ["78.108.192.0/21", "78.108.200.0/24", "2001:db8::/48"]
     assert "skipping malformed range" in capsys.readouterr().err

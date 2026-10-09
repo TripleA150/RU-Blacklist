@@ -1,0 +1,9 @@
+# Your own additions to the main blacklist (output/txt/blacklist*.txt and every format built from it).
+#
+# One entry per line, either:
+#   AS12345            an ASN: all prefixes it announces in BGP are added (refreshed daily)
+#   203.0.113.0/24     an IPv4/IPv6 address or prefix
+# Text after the first word is ignored, so you can leave a note: 203.0.113.0/24  # why
+# Empty lines and lines starting with "#" are ignored. config/allowlist.txt still wins.
+#
+# Be careful with ASNs of large ISPs: they announce huge ranges.

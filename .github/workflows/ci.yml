@@ -26,7 +26,7 @@ jobs:
       - name: ruff
         run: ruff check --output-format=github .
       - name: shellcheck
-        run: shellcheck -x ./*.sh ./*.subr deploy/*.sh tests/integration/*.sh
+        run: shellcheck -x scripts/*.sh deploy/*.sh tests/integration/*.sh
       - name: actionlint
         run: actionlint
 
@@ -57,11 +57,7 @@ jobs:
       - name: Install nftables and ipset
         run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends nftables ipset
       - name: Regenerate firewall files from the committed lists (offline)
-        run: |
-          ./blacklists_updater_nftables.sh > /dev/null
-          ./blacklists_updater_iptables.sh > /dev/null
-          ./blacklists_updater_nginx.sh > /dev/null
-          ./blacklists_updater_routes.sh > /dev/null
+        run: scripts/build.sh --offline
       - name: Report generated files that differ from the committed ones
         run: |
           if ! git diff --quiet; then

@@ -1,7 +1,7 @@
 # /etc/ru-blacklist.conf — settings for ru-blacklist-update (sourced as shell).
 
 # Where to download blacklist-v4.txt, blacklist-v6.txt, blacklist-vk-v4.txt, blacklist-vk-v6.txt.
-BASE_URL="https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists"
+BASE_URL="https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/output/txt"
 
 # Firewall backend: "nftables" or "ipset" (ipset + iptables/ip6tables).
 BACKEND="nftables"

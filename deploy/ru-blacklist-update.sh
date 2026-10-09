@@ -44,7 +44,7 @@ while [ $# -gt 0 ]; do
 done
 
 # ---- defaults (override in the config file) --------------------------------
-BASE_URL="https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists"
+BASE_URL="https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/output/txt"
 BACKEND="nftables"          # nftables | ipset
 BLOCK_GOV_INPUT="yes"       # drop new inbound connections from government networks
 BLOCK_VK_FORWARD="yes"      # reject forwarded (VPN client) traffic to VK/MAX networks

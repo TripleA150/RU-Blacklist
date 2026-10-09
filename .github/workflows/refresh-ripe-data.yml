@@ -8,9 +8,6 @@ on:
 permissions:
   contents: write
 
-env:
-  RIPE_SPLIT_URL: https://ftp.ripe.net/ripe/dbase/split
-
 jobs:
   refresh:
     name: Download RIPE data and resolve names
@@ -25,44 +22,12 @@ jobs:
           ref: main
       - uses: ./.github/actions/setup
 
-      - name: Download RIPE DB split dumps
-        run: |
-          mkdir -p "${RUNNER_TEMP}/ripe"
-          for name in inetnum inet6num aut-num organisation; do
-            curl -fsSL --retry 5 --retry-delay 30 -o "${RUNNER_TEMP}/ripe/ripe.db.${name}.gz" "${RIPE_SPLIT_URL}/ripe.db.${name}.gz"
-          done
-          ls -lh "${RUNNER_TEMP}/ripe"
-
-      - name: Fetch RU ASNs and prefixes (RIPEstat)
-        run: ./get_info_from_ripe.py
-
-      - name: Resolve AS and network names from the dumps
-        run: ./get_description.py --ripe-dump-dir "${RUNNER_TEMP}/ripe" --refresh --limit 300 auto/all-ru-asn.txt auto/all-ru-ipv4.txt auto/all-ru-ipv6.txt
-
-      - name: Parse RU inetnum objects
-        run: ./parse_ripe_db.py "${RUNNER_TEMP}/ripe/ripe.db.inetnum.gz" auto/ripe-ru-ipv4.txt auto/ripe-ru-ipv4.json
-
-      - name: Sanity check
-        run: |
-          check() {
-            lines="$(grep -c . "$1")"
-            echo "| $1 | ${lines} |" >> "${GITHUB_STEP_SUMMARY}"
-            if [ "${lines}" -lt "$2" ]; then
-              echo "::error::$1 has only ${lines} lines, expected at least $2"
-              exit 1
-            fi
-          }
-          { echo "| file | lines |"; echo "|---|---:|"; } >> "${GITHUB_STEP_SUMMARY}"
-          check auto/all-ru-asn.txt 4000
-          check auto/all-ru-ipv4.txt 8000
-          check auto/all-ru-ipv6.txt 1500
-          check auto/ripe-ru-ipv4.txt 130000
-          unresolved="$(cat auto/all-ru-asn.txt auto/all-ru-ipv4.txt auto/all-ru-ipv6.txt | grep -c -- '-no-description-' || true)"
-          echo "Entries without a description: ${unresolved}" >> "${GITHUB_STEP_SUMMARY}"
+      - name: Refresh data/ (RIPEstat + RIPE DB dumps)
+        run: scripts/refresh-ripe-data.sh "${RUNNER_TEMP}/ripe"
 
       - uses: ./.github/actions/commit-push
         with:
-          paths: auto
+          paths: data
           message: Refresh RIPE data
 
   rebuild:

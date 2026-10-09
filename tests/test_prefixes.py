@@ -2,10 +2,10 @@ import ipaddress
 
 import pytest
 
-import aggregate_prefixes
-import diff_blacklists
-from pylib.ip import convert_to_cidr, sort_prefixes
-from pylib.prefixes import aggregate, intervals, parse_prefix_lines, subtract_intervals
+from ru_blacklist import aggregate as aggregate_cli
+from ru_blacklist import diff
+from ru_blacklist.ip import convert_to_cidr, sort_prefixes
+from ru_blacklist.prefixes import aggregate, intervals, parse_prefix_lines, subtract_intervals
 
 
 def nets(*items):
@@ -74,7 +74,7 @@ def test_aggregate_cli(tmp_path, capsys):
     allow.write_text("10.0.1.0/25\n", encoding="utf-8")
     out = tmp_path / "out.txt"
 
-    assert aggregate_prefixes.main([str(source), "--exclude", str(allow), "--family", "4", "-o", str(out)]) == 0
+    assert aggregate_cli.main([str(source), "--exclude", str(allow), "--family", "4", "-o", str(out)]) == 0
     assert out.read_text(encoding="utf-8").splitlines() == ["10.0.0.0/24", "10.0.1.128/25"]
 
 
@@ -82,8 +82,8 @@ def test_aggregate_cli_strict_and_min_entries(tmp_path):
     source = tmp_path / "in.txt"
     source.write_text("10.0.0.0/24\ngarbage\n", encoding="utf-8")
     out = tmp_path / "out.txt"
-    assert aggregate_prefixes.main([str(source), "--strict", "-o", str(out)]) == 2
-    assert aggregate_prefixes.main([str(source), "--min-entries", "5", "-o", str(out)]) == 3
+    assert aggregate_cli.main([str(source), "--strict", "-o", str(out)]) == 2
+    assert aggregate_cli.main([str(source), "--min-entries", "5", "-o", str(out)]) == 3
     assert not out.exists()
 
 
@@ -93,7 +93,7 @@ def test_diff_reports_coverage_not_entry_count(tmp_path):
     old.write_text("10.0.0.0/25\n10.0.0.128/25\n192.0.2.0/24\n", encoding="utf-8")
     new.write_text("10.0.0.0/24\n198.51.100.0/24\n", encoding="utf-8")
 
-    stats = diff_blacklists.compare(diff_blacklists.read_networks(str(old)), diff_blacklists.read_networks(str(new)))[4]
+    stats = diff.compare(diff.read_networks(str(old)), diff.read_networks(str(new)))[4]
     assert (stats["old_entries"], stats["new_entries"]) == (3, 2)
     assert [str(n) for n in stats["removed"]] == ["192.0.2.0/24"]
     assert [str(n) for n in stats["added"]] == ["198.51.100.0/24"]
@@ -107,12 +107,12 @@ def test_diff_guard_and_summary(tmp_path):
     old.write_text("10.0.0.0/16\n", encoding="utf-8")
     new.write_text("10.0.0.0/17\n", encoding="utf-8")
 
-    assert diff_blacklists.main([str(old), str(new), "--max-shrink", "0.6", "--summary", str(summary)]) == 0
-    assert diff_blacklists.main([str(old), str(new), "--max-shrink", "0.25"]) == diff_blacklists.EXIT_SHRINK
+    assert diff.main([str(old), str(new), "--max-shrink", "0.6", "--summary", str(summary)]) == 0
+    assert diff.main([str(old), str(new), "--max-shrink", "0.25"]) == diff.EXIT_SHRINK
     assert "10.0.128.0/17" in summary.read_text(encoding="utf-8")
 
 
 def test_diff_missing_old_file_counts_as_empty(tmp_path):
     new = tmp_path / "new.txt"
     new.write_text("10.0.0.0/24\n", encoding="utf-8")
-    assert diff_blacklists.main([str(tmp_path / "missing.txt"), str(new), "--max-shrink", "0"]) == 0
+    assert diff.main([str(tmp_path / "missing.txt"), str(new), "--max-shrink", "0"]) == 0

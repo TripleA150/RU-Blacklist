@@ -20,7 +20,7 @@ STATE="${TMP}/state"
 CONF="${TMP}/ru-blacklist.conf"
 mkdir -p "${LISTS}"
 for f in blacklist-v4.txt blacklist-v6.txt blacklist-vk-v4.txt blacklist-vk-v6.txt; do
-    cp "${REPO_ROOT}/blacklists/${f}" "${LISTS}/${f}"
+    cp "${REPO_ROOT}/output/txt/${f}" "${LISTS}/${f}"
 done
 
 FAILED=0
@@ -68,18 +68,18 @@ check "output chain present" table_has "hook output"
 check "forward chain covers all traffic without VPN_IFACES" sh -c '! nft list table inet ru_blacklist | grep -q iifname'
 
 nft_table > "${TMP}/before"
-head -n 10 "${REPO_ROOT}/blacklists/blacklist-v4.txt" > "${LISTS}/blacklist-v4.txt"
+head -n 10 "${REPO_ROOT}/output/txt/blacklist-v4.txt" > "${LISTS}/blacklist-v4.txt"
 check_rc "tiny list is refused" 3 run
 nft_table > "${TMP}/after"
 check "rules untouched after refusal" cmp -s "${TMP}/before" "${TMP}/after"
 check_rc "--force applies a refused list" 0 run --force
-cp "${REPO_ROOT}/blacklists/blacklist-v4.txt" "${LISTS}/blacklist-v4.txt"
+cp "${REPO_ROOT}/output/txt/blacklist-v4.txt" "${LISTS}/blacklist-v4.txt"
 check_rc "full list applies again" 0 run --force
 
 printf '<html>rate limited</html>\n' > "${LISTS}/blacklist-v4.txt"
 check_rc "invalid download falls back to cache" 0 run
 check "cache kept the full list" sh -c "[ \$(grep -c . '${STATE}/blacklist-v4.txt') -gt 300 ]"
-cp "${REPO_ROOT}/blacklists/blacklist-v4.txt" "${LISTS}/blacklist-v4.txt"
+cp "${REPO_ROOT}/output/txt/blacklist-v4.txt" "${LISTS}/blacklist-v4.txt"
 
 sed -i "s#^BASE_URL=.*#BASE_URL=\"file://${TMP}/missing\"#" "${CONF}"
 check_rc "unreachable source falls back to cache" 0 run
@@ -105,10 +105,10 @@ check "sets removed" sh -c '! ipset list -n | grep -q ru-bl'
 check "chains removed" sh -c '! iptables -n -L RU_BL_INPUT'
 
 echo "# published ipset/nft files load repeatedly"
-for f in "${REPO_ROOT}"/blacklists_nftables/*.nft; do
+for f in "${REPO_ROOT}"/output/nftables/*.nft; do
     check "$(basename "${f}") loads twice" sh -c "nft -f '${f}' && nft -f '${f}'"
 done
-for f in "${REPO_ROOT}"/blacklists_iptables/*.ipset; do
+for f in "${REPO_ROOT}"/output/ipset/*.ipset; do
     check "$(basename "${f}") restores twice" sh -c "ipset restore < '${f}' && ipset restore < '${f}'"
 done
 
