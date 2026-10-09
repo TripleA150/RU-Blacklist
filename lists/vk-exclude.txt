@@ -1,0 +1,5 @@
+# Fixed strings (not regexes), matched case-insensitively: entries containing
+# any of them are dropped from the VK-only lists.
+
+# VK Cloud hosting: networks of VK Cloud customers, not VK services
+VK Cloud Solutions VK Hosting

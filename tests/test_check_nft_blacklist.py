@@ -21,6 +21,22 @@ class CheckNftBlacklistTests(unittest.TestCase):
             self.assertTrue(blocked)
             self.assertEqual(str(prefix), "87.240.128.0/18")
 
+    def test_comments_and_keywords_are_not_parsed_as_prefixes(self):
+        config = make_nft_config(["10.0.0.0/24"], ["2a00:bdc0::/29"], comment="Source: dead:beef notes")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = Path(tmpdir) / "blacklist.nft"
+            config_path.write_text(config, encoding="utf-8")
+            v4_prefixes, v6_prefixes = parse_nft_config(config_path)
+
+        self.assertEqual([str(p) for p in v4_prefixes], ["10.0.0.0/24"])
+        self.assertEqual([str(p) for p in v6_prefixes], ["2a00:bdc0::/29"])
+        self.assertEqual(check_ip_in_blacklist("2a00:bdc0::1", v4_prefixes, v6_prefixes)[0], True)
+
+    def test_invalid_ip_raises_value_error(self):
+        with self.assertRaisesRegex(ValueError, "Invalid IP address"):
+            check_ip_in_blacklist("not-an-ip", [], [])
+
 
 if __name__ == "__main__":
     unittest.main()

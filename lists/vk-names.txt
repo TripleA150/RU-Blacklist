@@ -1,0 +1,12 @@
+# Name patterns for the VK-only lists (blacklist-vk*.txt), meant for blocking
+# OUTGOING traffic to VK / MAX / OK services.
+#
+# One extended regular expression per line (awk syntax), joined with "|" and
+# matched case-insensitively against auto/all-ru-ipv4.txt, auto/all-ru-ipv6.txt
+# and auto/ripe-ru-ipv4.txt. Write patterns in lower case.
+
+ru-netbridge-(19911202|20061117)
+odnoklassniki
+vkcompany
+vkontakte
+llc vk

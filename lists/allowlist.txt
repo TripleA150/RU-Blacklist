@@ -1,0 +1,7 @@
+# Prefixes that must never appear in any generated list, one IPv4/IPv6 address
+# or CIDR per line. They are cut out of every blacklist at build time, so a
+# false positive can be fixed without touching the name patterns.
+#
+# Example:
+#   203.0.113.0/24
+#   2001:db8::/32

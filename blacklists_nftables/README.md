@@ -4,14 +4,20 @@ Short: ready-to-use nftables set files (general and VK-only, separated by IPv4/I
 
 ## Download links
 
-- https://raw.githubusercontent.com/C24Be/AS_Network_List/refs/heads/main/blacklists_nftables/blacklist.nft
-- https://raw.githubusercontent.com/C24Be/AS_Network_List/refs/heads/main/blacklists_nftables/blacklist-v4.nft
-- https://raw.githubusercontent.com/C24Be/AS_Network_List/refs/heads/main/blacklists_nftables/blacklist-v6.nft
-- https://raw.githubusercontent.com/C24Be/AS_Network_List/refs/heads/main/blacklists_nftables/blacklist-vk.nft
-- https://raw.githubusercontent.com/C24Be/AS_Network_List/refs/heads/main/blacklists_nftables/blacklist-vk-v4.nft
-- https://raw.githubusercontent.com/C24Be/AS_Network_List/refs/heads/main/blacklists_nftables/blacklist-vk-v6.nft
+- https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists_nftables/blacklist.nft
+- https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists_nftables/blacklist-v4.nft
+- https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists_nftables/blacklist-v6.nft
+- https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists_nftables/blacklist-vk.nft
+- https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists_nftables/blacklist-vk-v4.nft
+- https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists_nftables/blacklist-vk-v6.nft
 
 ## How to use
+
+Every file can be loaded again at any time (e.g. from cron after downloading a fresh copy):
+the sets are flushed and refilled inside one atomic `nft -f` transaction. The `-v4`/`-v6`
+files only touch their own set, so load either the mixed file or the pair, not both.
+
+For automatic updates with ready-made rules see [`deploy/README.md`](../deploy/README.md).
 
 ### 1) Protect VM from incoming connections (general blacklists)
 

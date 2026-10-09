@@ -1,0 +1,44 @@
+name: Commit and push
+description: Commits the given paths if they changed and pushes them to the checked-out branch.
+
+inputs:
+  paths:
+    description: Space-separated paths to commit
+    required: true
+  message:
+    description: Commit message (a UTC timestamp is appended)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Commit and push
+      shell: bash
+      env:
+        PATHS: ${{ inputs.paths }}
+        MESSAGE: ${{ inputs.message }}
+      run: |
+        set -euo pipefail
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+        read -ra paths <<< "${PATHS}"
+        git add -A -- "${paths[@]}"
+        if git diff --cached --quiet; then
+          echo "No changes to commit."
+          exit 0
+        fi
+        git diff --cached --stat | tail -n 1
+        git commit -q -m "${MESSAGE} $(date -u '+%Y-%m-%d %H:%M UTC')"
+
+        branch="$(git rev-parse --abbrev-ref HEAD)"
+        for attempt in 1 2 3 4; do
+          if git push origin "HEAD:${branch}"; then
+            exit 0
+          fi
+          echo "Push failed (attempt ${attempt}), rebasing onto origin/${branch}..."
+          sleep $((attempt * 5))
+          git pull --rebase origin "${branch}"
+        done
+        echo "::error::Could not push to ${branch}"
+        exit 1

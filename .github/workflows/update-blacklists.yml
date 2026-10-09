@@ -1,0 +1,66 @@
+name: Update blacklists
+
+on:
+  schedule:
+    - cron: '17 3 * * *'  # daily at 03:17 UTC (10:17 UTC+7)
+  workflow_dispatch:
+    inputs:
+      skip_guard:
+        description: Publish even if a list loses more than 25% of its address coverage
+        type: boolean
+        default: false
+  workflow_call:
+    inputs:
+      skip_guard:
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    name: Build, validate and publish
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    concurrency:
+      group: data-update
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - uses: ./.github/actions/setup
+      - name: Install nftables and ipset
+        run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends nftables ipset
+
+      - name: Build text blacklists (RIPEstat + RIPE whois)
+        run: ./blacklists_updater_txt.sh
+      - name: Build nftables, ipset, nginx and route files
+        run: |
+          ./blacklists_updater_nftables.sh > /dev/null
+          ./blacklists_updater_iptables.sh > /dev/null
+          ./blacklists_updater_nginx.sh > /dev/null
+          ./blacklists_updater_routes.sh > /dev/null
+
+      - name: Load firewall files and run deploy script end to end (network namespace)
+        run: sudo tests/integration/test_deploy.sh
+
+      - name: Compare with the published lists (shrink guard)
+        env:
+          SKIP_GUARD: ${{ inputs.skip_guard }}
+        run: |
+          max_shrink=0.25
+          [ "${SKIP_GUARD}" = "true" ] && max_shrink=1
+          status=0
+          for list in blacklist.txt blacklist-vk.txt; do
+            git show "HEAD:blacklists/${list}" > "${RUNNER_TEMP}/${list}" 2> /dev/null || : > "${RUNNER_TEMP}/${list}"
+            ./diff_blacklists.py "${RUNNER_TEMP}/${list}" "blacklists/${list}" --label "${list}" \
+              --max-shrink "${max_shrink}" --summary "${GITHUB_STEP_SUMMARY}" > /dev/null || status=$?
+          done
+          exit "${status}"
+
+      - uses: ./.github/actions/commit-push
+        with:
+          paths: auto/black_ass.txt blacklists blacklists_nftables blacklists_iptables blacklists_nginx blacklists_route
+          message: Update blacklists

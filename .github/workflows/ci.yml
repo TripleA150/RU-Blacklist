@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+        with:
+          dev: 'true'
+      - name: ruff
+        run: ruff check --output-format=github .
+      - name: shellcheck
+        run: shellcheck -x ./*.sh ./*.subr deploy/*.sh tests/integration/*.sh
+      - name: actionlint
+        run: actionlint
+
+  test:
+    name: Unit tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+        with:
+          python-version: ${{ matrix.python }}
+          dev: 'true'
+      - name: pytest
+        run: pytest
+
+  firewall:
+    name: Firewall files and server deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup
+      - name: Install nftables and ipset
+        run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends nftables ipset
+      - name: Regenerate firewall files from the committed lists (offline)
+        run: |
+          ./blacklists_updater_nftables.sh > /dev/null
+          ./blacklists_updater_iptables.sh > /dev/null
+          ./blacklists_updater_nginx.sh > /dev/null
+          ./blacklists_updater_routes.sh > /dev/null
+      - name: Report generated files that differ from the committed ones
+        run: |
+          if ! git diff --quiet; then
+            echo "::warning::Generated files differ from the committed ones; the next 'Update blacklists' run will publish them."
+            git diff --stat
+          fi
+      - name: Load firewall files and run deploy script end to end (network namespace)
+        run: sudo tests/integration/test_deploy.sh

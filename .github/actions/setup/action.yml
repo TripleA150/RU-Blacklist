@@ -1,0 +1,28 @@
+name: Set up Python
+description: Installs Python with pip caching and the project requirements.
+
+inputs:
+  python-version:
+    description: Python version to install
+    default: '3.12'
+  dev:
+    description: Also install linters and test tools (requirements-dev.txt)
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v6
+      with:
+        python-version: ${{ inputs.python-version }}
+        cache: pip
+        cache-dependency-path: requirements*.txt
+
+    - name: Install requirements
+      shell: bash
+      env:
+        DEV: ${{ inputs.dev }}
+      run: |
+        requirements=requirements.txt
+        [ "${DEV}" = "true" ] && requirements=requirements-dev.txt
+        python -m pip install --disable-pip-version-check -r "${requirements}"

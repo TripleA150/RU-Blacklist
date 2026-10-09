@@ -1,0 +1,5 @@
+# Entries matching any of these patterns are never blacklisted by name.
+# Same syntax as black-names.txt (grep -E, case-insensitive, one per line).
+
+# RUVDS hosting: contains "uvd"
+ruvds

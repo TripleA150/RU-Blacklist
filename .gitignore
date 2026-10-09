@@ -8,3 +8,14 @@ __pycache__
 # macOS #
 
 *.DS_Store
+
+# Tooling #
+
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Build scratch dirs and downloaded RIPE dumps #
+
+/.build.*
+ripe.db.*

@@ -1,0 +1,33 @@
+# /etc/ru-blacklist.conf — settings for ru-blacklist-update (sourced as shell).
+
+# Where to download blacklist-v4.txt, blacklist-v6.txt, blacklist-vk-v4.txt, blacklist-vk-v6.txt.
+BASE_URL="https://raw.githubusercontent.com/TripleA150/RU-Blacklist/main/blacklists"
+
+# Firewall backend: "nftables" or "ipset" (ipset + iptables/ip6tables).
+BACKEND="nftables"
+
+# Drop new inbound connections from Russian government networks.
+BLOCK_GOV_INPUT="yes"
+
+# Reject traffic from VPN clients to VK / MAX / OK networks.
+#   WireGuard / AmneziaWG / OpenVPN (client traffic is routed): BLOCK_VK_FORWARD
+#   Xray / sing-box / Shadowsocks / Outline (the proxy connects itself): BLOCK_VK_OUTPUT
+#   Using both is fine.
+BLOCK_VK_FORWARD="yes"
+BLOCK_VK_OUTPUT="no"
+
+# VPN interfaces whose forwarded traffic is filtered, space-separated, e.g. "wg0 awg0".
+# Empty = all forwarded traffic.
+VPN_IFACES=""
+
+# Addresses/prefixes that are never blocked inbound, space-separated (IPv4 and IPv6).
+# Put your own admin IPs here if your ISP might end up in the government lists.
+ALLOW_PREFIXES=""
+
+# Sanity checks: refuse suspicious lists and keep the current rules.
+MIN_GOV_ENTRIES=300
+MIN_VK_ENTRIES=20
+MAX_SHRINK_PERCENT=50
+
+# Cache of the last applied lists (used if a download fails).
+STATE_DIR="/var/lib/ru-blacklist"

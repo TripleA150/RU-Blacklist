@@ -1,0 +1,6 @@
+# Linters and test runner used by CI (.github/workflows/ci.yml).
+-r requirements.txt
+actionlint-py==1.7.12.25
+pytest==9.1.1
+ruff==0.16.10
+shellcheck-py==0.11.0.1

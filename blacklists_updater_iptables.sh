@@ -1,4 +1,11 @@
 #!/bin/sh
+# Generates ipset restore files for iptables/ip6tables from the text blacklists.
+#
+# The files can be restored again and again, even while iptables rules use the
+# set: entries are loaded into "<set>-tmp", which is then atomically swapped
+# with "<set>" and destroyed.
+
+set -eu
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "${SCRIPT_DIR}/blacklists_updater_common.subr"
@@ -10,64 +17,72 @@ iptables_v6_output_file="${iptables_output_dir}/blacklist-v6.ipset"
 iptables_vk_v4_output_file="${iptables_output_dir}/blacklist-vk-v4.ipset"
 iptables_vk_v6_output_file="${iptables_output_dir}/blacklist-vk-v6.ipset"
 
+# Fixed set parameters: "create -exist" only succeeds for an identical existing set.
+IPSET_HASHSIZE=1024
+IPSET_MAXELEM=65536
+
 # Create required directories if they don't exist
 mkdir -p "${iptables_output_dir}" "${BLACKLISTS_DIR}"
 build_vk_name_blacklists
 
-# Function to generate ipset config from input file
+# generate_ipset_config INPUT OUTPUT DESCRIPTION SET_NAME FAMILY
 generate_ipset_config() {
-    local input_file="$1"
-    local output_file="$2"
-    local ip_version="$3"
-    local set_name="$4"
-    local family="$5"
-    local iptables_cmd="iptables"
-    local rule_primary=""
-    local rule_secondary=""
-
+    input_file="$1"
+    output_file="$2"
+    ip_version="$3"
+    set_name="$4"
+    family="$5"
+    tmp_set="${set_name}-tmp"
+    iptables_cmd="iptables"
     [ "${family}" = "inet6" ] && iptables_cmd="ip6tables"
 
-    if printf "%s" "${set_name}" | grep -q '^blacklist-vk'; then
-        rule_primary="${iptables_cmd} -I OUTPUT -m set --match-set ${set_name} dst -j REJECT"
-        rule_secondary="${iptables_cmd} -I FORWARD -m set --match-set ${set_name} dst -j REJECT"
-    else
-        rule_primary="${iptables_cmd} -I INPUT -m set --match-set ${set_name} src -m conntrack --ctstate NEW -j DROP"
-        rule_secondary="${iptables_cmd} -I FORWARD -m set --match-set ${set_name} src -m conntrack --ctstate NEW -j DROP"
+    case "${set_name}" in
+        blacklist-vk*)
+            rule_primary="${iptables_cmd} -I OUTPUT -m set --match-set ${set_name} dst -j REJECT"
+            rule_secondary="${iptables_cmd} -I FORWARD -m set --match-set ${set_name} dst -j REJECT"
+            ;;
+        *)
+            rule_primary="${iptables_cmd} -I INPUT -m set --match-set ${set_name} src -m conntrack --ctstate NEW -j DROP"
+            rule_secondary="${iptables_cmd} -I FORWARD -m set --match-set ${set_name} src -m conntrack --ctstate NEW -j DROP"
+            ;;
+    esac
+
+    count="$(count_lines "${input_file}")"
+    if [ "${count}" -gt "${IPSET_MAXELEM}" ]; then
+        echo "ERROR: ${input_file} has ${count} entries, more than maxelem ${IPSET_MAXELEM}" >&2
+        return 1
     fi
 
-    # Count entries for hash size calculation
-    local count=$(wc -l < "${input_file}" | tr -d ' ')
-    local hashsize=$((count > 1024 ? count : 1024))
-    local maxelem=$((count * 2))
-
-    # Generate ipset configuration with header
-    cat > "${output_file}" << EOF
+    tmp="$(make_tmp)"
+    {
+        cat << EOF
 # IPSet blacklist configuration ${ip_version}
-# Auto-generated from $(basename ${input_file})
+# Auto-generated from $(basename "${input_file}")
 # Last updated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+# Total entries: ${count}
 #
 # Usage:
-#   1. Load the ipset:
-#      ipset restore < $(basename ${output_file})
+#   1. Load or refresh the set (safe to repeat while rules use it):
+#      ipset restore < $(basename "${output_file}")
 #
 #   2. Use with iptables/ip6tables:
 #      ${rule_primary}
-${rule_secondary:+#      ${rule_secondary}}
+#      ${rule_secondary}
 #
 #   3. To flush/delete the set:
 #      ipset flush ${set_name}
 #      ipset destroy ${set_name}
 #
 
-create ${set_name} hash:net family ${family} hashsize ${hashsize} maxelem ${maxelem}
+create ${set_name} hash:net family ${family} hashsize ${IPSET_HASHSIZE} maxelem ${IPSET_MAXELEM} -exist
+create ${tmp_set} hash:net family ${family} hashsize ${IPSET_HASHSIZE} maxelem ${IPSET_MAXELEM} -exist
+flush ${tmp_set}
 EOF
-
-    # Add entries for each network/IP
-    while IFS= read -r network; do
-        # Skip empty lines
-        [ -z "${network}" ] && continue
-        echo "add ${set_name} ${network}" >> "${output_file}"
-    done < "${input_file}"
+        awk -v set="${tmp_set}" 'NF { print "add " set " " $1 }' "${input_file}"
+        echo "swap ${tmp_set} ${set_name}"
+        echo "destroy ${tmp_set}"
+    } > "${tmp}"
+    publish_file "${tmp}" "${output_file}"
 
     echo "✓ Generated ${ip_version}: ${output_file}"
     echo "  Total entries: ${count}"

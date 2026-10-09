@@ -1,0 +1,12 @@
+[Unit]
+Description=Update RU-Blacklist firewall sets periodically
+
+[Timer]
+# Re-create the rules shortly after boot, then refresh every 6 hours.
+OnBootSec=1min
+OnCalendar=*-*-* 00/6:40:00
+RandomizedDelaySec=15min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=Update RU-Blacklist firewall sets
+Documentation=https://github.com/TripleA150/RU-Blacklist/tree/main/deploy
+Wants=network-online.target
+After=network-online.target nftables.service netfilter-persistent.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/ru-blacklist-update
+PrivateTmp=yes
+ProtectHome=yes
+NoNewPrivileges=yes

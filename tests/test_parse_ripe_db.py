@@ -1,3 +1,4 @@
+import gzip
 import json
 import tempfile
 import unittest
@@ -35,6 +36,38 @@ org: ORG-2
 
             text_lines = output_text.read_text(encoding="utf-8").splitlines()
             self.assertEqual(text_lines, ["10.0.0.0/24 TEST1 (ORG-1) [desc1]"])
+
+    def test_reads_gzip_skips_malformed_and_accepts_lowercase_country(self):
+        sample = """\
+inetnum: 10.0.0.0 - 10.0.1.255
+netname: TEST1
+mnt-by: VKCOMPANY-MNT
+country: ru
+
+inetnum: broken
+netname: BAD
+country: RU
+"""
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            source = Path(tmpdir) / "ripe.db.inetnum.gz"
+            output_text = Path(tmpdir) / "out.txt"
+            output_json = Path(tmpdir) / "out.json"
+            with gzip.open(source, "wt", encoding="latin-1") as dump:
+                dump.write(sample)
+
+            parse(str(source), str(output_text), str(output_json))
+
+            text_lines = output_text.read_text(encoding="utf-8").splitlines()
+            self.assertEqual(text_lines, ["10.0.0.0/23 TEST1 VKCOMPANY-MNT () []"])
+
+    def test_no_matching_records_is_an_error(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            source = Path(tmpdir) / "ripe.db.inetnum"
+            source.write_text("inetnum: 10.0.0.0 - 10.0.0.255\ncountry: US\n", encoding="latin-1")
+
+            with self.assertRaises(ValueError):
+                parse(str(source), str(Path(tmpdir) / "o.txt"), str(Path(tmpdir) / "o.json"))
 
 
 if __name__ == "__main__":
