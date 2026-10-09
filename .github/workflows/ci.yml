@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
         with:
           dev: 'true'
@@ -39,7 +39,7 @@ jobs:
       matrix:
         python: ['3.10', '3.13']
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
         with:
           python-version: ${{ matrix.python }}
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - name: Install nftables and ipset
         run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends nftables ipset
