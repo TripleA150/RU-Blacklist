@@ -1,7 +1,7 @@
 # IPSet blacklist configuration (VK names, IPv4 only)
 # Auto-generated from blacklist-vk-v4.txt
-# Last updated: 2026-10-09 02:28:31 UTC
-# Total entries: 91
+# Last updated: 2026-10-09 02:48:20 UTC
+# Total entries: 92
 #
 # Usage:
 #   1. Load or refresh the set (safe to repeat while rules use it):
@@ -61,6 +61,7 @@ add blacklist-vk-v4-tmp 90.156.148.0/22
 add blacklist-vk-v4-tmp 90.156.212.0/22
 add blacklist-vk-v4-tmp 90.156.216.0/22
 add blacklist-vk-v4-tmp 90.156.232.0/21
+add blacklist-vk-v4-tmp 90.156.248.0/22
 add blacklist-vk-v4-tmp 91.231.132.0/22
 add blacklist-vk-v4-tmp 91.237.76.0/24
 add blacklist-vk-v4-tmp 93.153.255.84/30
