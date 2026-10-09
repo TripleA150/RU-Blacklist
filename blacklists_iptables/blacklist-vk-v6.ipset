@@ -1,9 +1,10 @@
 # IPSet blacklist configuration (VK names, IPv6 only)
 # Auto-generated from blacklist-vk-v6.txt
-# Last updated: 2026-10-08 12:36:21 UTC
+# Last updated: 2026-10-09 02:28:31 UTC
+# Total entries: 3
 #
 # Usage:
-#   1. Load the ipset:
+#   1. Load or refresh the set (safe to repeat while rules use it):
 #      ipset restore < blacklist-vk-v6.ipset
 #
 #   2. Use with iptables/ip6tables:
@@ -15,7 +16,11 @@
 #      ipset destroy blacklist-vk-v6
 #
 
-create blacklist-vk-v6 hash:net family inet6 hashsize 1024 maxelem 6
-add blacklist-vk-v6 2a00:1148::/29
-add blacklist-vk-v6 2a00:b4c0::/29
-add blacklist-vk-v6 2a00:bdc0::/29
+create blacklist-vk-v6 hash:net family inet6 hashsize 1024 maxelem 65536 -exist
+create blacklist-vk-v6-tmp hash:net family inet6 hashsize 1024 maxelem 65536 -exist
+flush blacklist-vk-v6-tmp
+add blacklist-vk-v6-tmp 2a00:1148::/29
+add blacklist-vk-v6-tmp 2a00:b4c0::/29
+add blacklist-vk-v6-tmp 2a00:bdc0::/29
+swap blacklist-vk-v6-tmp blacklist-vk-v6
+destroy blacklist-vk-v6-tmp
