@@ -36,7 +36,8 @@ import sys
 for line in open(sys.argv[1]):
     if line.startswith("AS"):
         print(f"# Networks announced by {line.strip()}")
-        print({"AS47764": "87.240.128.0/18", "AS61280": "185.224.228.0/24"}.get(line.strip(), "100.64.0.0/24"))
+        known = {"AS47764": "87.240.128.0/18", "AS61280": "185.224.228.0/24", "AS64500": "198.18.0.0/24", "AS64501": "198.19.0.0/24"}
+        print(known.get(line.strip(), "100.64.0.0/24"))
 """
 
 STUB_NETNAME = """\
@@ -158,3 +159,31 @@ def test_format_generators_do_not_rewrite_unchanged_files(repo):
     assert "add blacklist-vk-v4-tmp 87.240.128.0/18" in ipset
     assert ipset[-2:] == ["swap blacklist-vk-v4-tmp blacklist-vk-v4", "destroy blacklist-vk-v4-tmp"]
     assert "flush set inet filter blacklist_vk_v6" in (repo / "blacklists_nftables" / "blacklist-vk-v6.nft").read_text(encoding="utf-8")
+
+
+def test_custom_asns_and_prefixes_are_added(repo):
+    with open(repo / "lists" / "custom-blacklist.txt", "a", encoding="utf-8") as custom:
+        custom.write("as64500  # my ASN\n198.51.100.7  # one host\n2001:db8:1::/48\n")
+
+    result = run(repo, "blacklists_updater_txt.sh")
+    assert result.returncode == 0, result.stderr
+
+    assert "AS64500" in lines(repo / "auto" / "black_ass.txt")
+    blacklist = lines(repo / "blacklists" / "blacklist.txt")
+    assert {"198.18.0.0/24", "198.51.100.7/32", "2001:db8:1::/48"} <= set(blacklist)
+    assert not set(lines(repo / "blacklists" / "blacklist-vk.txt")) & {"198.18.0.0/24", "198.51.100.7/32"}
+
+
+def test_invalid_custom_entry_fails_the_build(repo):
+    with open(repo / "lists" / "custom-blacklist.txt", "a", encoding="utf-8") as custom:
+        custom.write("AS 64500\n")
+    assert run(repo, "blacklists_updater_txt.sh").returncode != 0
+
+
+@pytest.mark.parametrize("name", ["black-names.txt", "vk-names.txt"])
+def test_invalid_pattern_fails_instead_of_matching_nothing(repo, name):
+    with open(repo / "lists" / name, "a", encoding="utf-8") as patterns:
+        patterns.write("broken(\n")
+    result = run(repo, "blacklists_updater_txt.sh")
+    assert result.returncode != 0
+    assert not (repo / "blacklists" / "blacklist.txt").exists()
