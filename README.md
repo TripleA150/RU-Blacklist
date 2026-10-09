@@ -99,7 +99,6 @@ so removed prefixes get unblocked and merged prefixes do not cause "File exists"
 - `lists/white-names.txt`: Name patterns that are never blacklisted.
 - `lists/vk-names.txt`, `lists/vk-exclude.txt`: Name patterns for the VK-only lists.
 - `lists/custom-blacklist.txt`: Your own ASNs (`AS12345`, all announced prefixes) and prefixes for the main blacklist.
-- `lists/custom-vk.txt`: Your own ASNs and prefixes for the VK-only lists (outgoing blocking).
 - `lists/allowlist.txt`: Prefixes that must never appear in any list (for false positives).
 - ASN candidates used for blacklists are derived automatically from `auto/all-ru-asn.txt`.
 

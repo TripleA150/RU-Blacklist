@@ -33,10 +33,6 @@ RU_GOV_NETNAMES_FILE="${LISTS_DIR}/ru-gov-netnames.txt"
 ALLOWLIST_FILE="${LISTS_DIR}/allowlist.txt"
 VK_NAME_EXCLUDE_FILE="${LISTS_DIR}/vk-exclude.txt"
 CUSTOM_BLACKLIST_FILE="${LISTS_DIR}/custom-blacklist.txt"
-CUSTOM_VK_FILE="${LISTS_DIR}/custom-vk.txt"
-# Prefixes announced by the ASNs of lists/custom-vk.txt, refreshed by blacklists_updater_txt.sh,
-# so that the offline format generators can rebuild the VK lists without network access.
-AUTO_CUSTOM_VK_ASN_FILE="${AUTO_DIR}/custom-vk-asn-prefixes.txt"
 
 # Header lines that change on every run; ignored when deciding whether a file changed.
 TIMESTAMP_LINE_RE='^# (Last updated|Generated):'
@@ -165,12 +161,6 @@ build_vk_name_blacklists() {
             awk '{ print $1 }' "${_vk_matched}" >> "${_vk_raw}"
         fi
     done
-
-    # Own additions: prefixes from lists/custom-vk.txt and the prefixes of its ASNs.
-    custom_prefixes "${CUSTOM_VK_FILE}" >> "${_vk_raw}"
-    if [ -f "${AUTO_CUSTOM_VK_ASN_FILE}" ]; then
-        cat "${AUTO_CUSTOM_VK_ASN_FILE}" >> "${_vk_raw}"
-    fi
 
     aggregate_to "${BLACKLIST_VK_FILE}" --strict "${_vk_raw}"
     aggregate_to "${BLACKLIST_VK_V4_FILE}" --family 4 "${BLACKLIST_VK_FILE}"

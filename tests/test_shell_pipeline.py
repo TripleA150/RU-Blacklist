@@ -163,9 +163,7 @@ def test_format_generators_do_not_rewrite_unchanged_files(repo):
 
 def test_custom_asns_and_prefixes_are_added(repo):
     with open(repo / "lists" / "custom-blacklist.txt", "a", encoding="utf-8") as custom:
-        custom.write("AS64500  # my ASN\n198.51.100.7  # one host\n2001:db8:1::/48\n")
-    with open(repo / "lists" / "custom-vk.txt", "a", encoding="utf-8") as custom:
-        custom.write("as64501\n198.51.100.128/25 # VK edge\n")
+        custom.write("as64500  # my ASN\n198.51.100.7  # one host\n2001:db8:1::/48\n")
 
     result = run(repo, "blacklists_updater_txt.sh")
     assert result.returncode == 0, result.stderr
@@ -173,14 +171,7 @@ def test_custom_asns_and_prefixes_are_added(repo):
     assert "AS64500" in lines(repo / "auto" / "black_ass.txt")
     blacklist = lines(repo / "blacklists" / "blacklist.txt")
     assert {"198.18.0.0/24", "198.51.100.7/32", "2001:db8:1::/48"} <= set(blacklist)
-    assert "198.19.0.0/24" not in blacklist, "custom VK entries stay out of the main list"
-
-    vk = lines(repo / "blacklists" / "blacklist-vk.txt")
-    assert {"198.19.0.0/24", "198.51.100.128/25"} <= set(vk)
-
-    # The offline format generators rebuild the VK list from the cached ASN prefixes.
-    assert run(repo, "blacklists_updater_nftables.sh").returncode == 0
-    assert "198.19.0.0/24" in lines(repo / "blacklists" / "blacklist-vk.txt")
+    assert not set(lines(repo / "blacklists" / "blacklist-vk.txt")) & {"198.18.0.0/24", "198.51.100.7/32"}
 
 
 def test_invalid_custom_entry_fails_the_build(repo):

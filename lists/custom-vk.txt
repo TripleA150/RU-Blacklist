@@ -1,8 +1,0 @@
-# Your own additions to the VK-only lists (blacklist-vk*.txt and every format built from it),
-# meant for blocking OUTGOING traffic to VK / MAX / OK services.
-#
-# One entry per line, either:
-#   AS47764            an ASN: all prefixes it announces in BGP are added (refreshed daily)
-#   95.163.32.0/19     an IPv4/IPv6 address or prefix
-# Text after the first word is ignored, so you can leave a note: 95.163.32.0/19  # why
-# Empty lines and lines starting with "#" are ignored. lists/allowlist.txt still wins.

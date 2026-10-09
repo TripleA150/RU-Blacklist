@@ -27,7 +27,7 @@ def is_prefix(token):
     return True
 
 
-@pytest.mark.parametrize("name", ["custom-blacklist.txt", "custom-vk.txt"])
+@pytest.mark.parametrize("name", ["custom-blacklist.txt"])
 def test_custom_lists_contain_asns_or_prefixes(name):
     bad = [f"lists/{name}:{lineno}: {token!r}" for lineno, token in entries(name) if not (ASN_RE.fullmatch(token) or is_prefix(token))]
     assert not bad, "entries must be an ASN (AS12345) or a prefix (203.0.113.0/24):\n" + "\n".join(bad)
