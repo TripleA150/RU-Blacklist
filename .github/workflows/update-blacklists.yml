@@ -2,7 +2,7 @@ name: Update blacklists
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # daily at 03:17 UTC (10:17 UTC+7)
+    - cron: '0 3 * * *'  # daily at 03:00 UTC
   workflow_dispatch:
     inputs:
       skip_guard:
