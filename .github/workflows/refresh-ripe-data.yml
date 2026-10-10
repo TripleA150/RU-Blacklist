@@ -2,7 +2,7 @@ name: Refresh RIPE data
 
 on:
   schedule:
-    - cron: '0 0 * * 0'  # weekly, Sunday 01:23 UTC
+    - cron: '0 0 * * 0'  # weekly, Sunday 00:00 UTC
   workflow_dispatch:
 
 permissions:
