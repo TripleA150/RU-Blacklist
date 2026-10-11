@@ -400280,15 +400280,6 @@
     },
     {
         "inetnum": [
-            "90.157.89.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
             "90.157.92.0/24"
         ],
         "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
@@ -507174,15 +507165,6 @@
     },
     {
         "inetnum": [
-            "195.88.92.0/23"
-        ],
-        "descr": "",
-        "netname": "Get-Net-Network RIPE-NCC-END-MNT GET-NET-MNT mnt-ru-get-net-1",
-        "country": "RU",
-        "org": "ORG-GL362-RIPE"
-    },
-    {
-        "inetnum": [
             "213.85.105.128/25"
         ],
         "descr": "Russian Central Telegraph, Moscow",
@@ -538553,15 +538535,6 @@
     },
     {
         "inetnum": [
-            "94.31.157.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
             "94.31.158.0/24"
         ],
         "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
@@ -538697,34 +538670,7 @@
     },
     {
         "inetnum": [
-            "94.31.181.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
             "94.31.182.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
-            "94.31.183.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
-            "94.31.186.0/24"
         ],
         "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
         "netname": "KABINET ROSTELECOM-MNT",
@@ -538752,24 +538698,6 @@
     {
         "inetnum": [
             "94.31.189.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
-            "94.31.190.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
-            "94.31.191.0/24"
         ],
         "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
         "netname": "KABINET ROSTELECOM-MNT",
@@ -538949,15 +538877,6 @@
     },
     {
         "inetnum": [
-            "94.31.223.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
             "94.31.227.0/24"
         ],
         "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
@@ -539040,24 +538959,6 @@
     {
         "inetnum": [
             "94.31.239.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
-            "94.31.242.0/24"
-        ],
-        "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
-        "netname": "KABINET ROSTELECOM-MNT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
-            "94.31.244.0/24"
         ],
         "descr": "Teleset-Servis Ltd. Russian Federation, Ekaterinburg",
         "netname": "KABINET ROSTELECOM-MNT",
@@ -1463900,15 +1463801,6 @@
     },
     {
         "inetnum": [
-            "176.101.184.0/22"
-        ],
-        "descr": "",
-        "netname": "HOMEOPTIC-NET RIPE-NCC-END-MNT HOMEOPTIC-MNT",
-        "country": "RU",
-        "org": "ORG-HL171-RIPE"
-    },
-    {
-        "inetnum": [
             "176.101.188.0/22"
         ],
         "descr": "",
@@ -1469575,15 +1469467,6 @@
         "netname": "RU-IGKH-20201029 mnt-ru-igkh-1 RIPE-NCC-HM-MNT",
         "country": "RU",
         "org": "ORG-IGK1-RIPE"
-    },
-    {
-        "inetnum": [
-            "188.42.87.0/24"
-        ],
-        "descr": "",
-        "netname": "SERVERS-RU-MOW1 EXEPTO-MNT",
-        "country": "RU",
-        "org": "ORG-SL92-RIPE"
     },
     {
         "inetnum": [
@@ -1512656,15 +1512539,6 @@
     },
     {
         "inetnum": [
-            "188.42.179.0/24"
-        ],
-        "descr": "",
-        "netname": "SERVERS-RU-MOW1 EXEPTO-MNT",
-        "country": "RU",
-        "org": "ORG-SL92-RIPE"
-    },
-    {
-        "inetnum": [
             "188.42.180.0/24"
         ],
         "descr": "",
@@ -1517844,8 +1517718,8 @@
         "inetnum": [
             "178.130.132.0/24"
         ],
-        "descr": "",
-        "netname": "RU-VPSVILLE1-20100315 ru-vpsville1-1-mnt",
+        "descr": "vpsville VPS hosting",
+        "netname": "vpsville-net ru-vpsville1-1-mnt",
         "country": "RU",
         "org": "ORG-VL264-RIPE"
     },
@@ -1653173,15 +1653047,6 @@
     },
     {
         "inetnum": [
-            "143.246.176.192/32"
-        ],
-        "descr": "Network Russia",
-        "netname": "RU-NET KTB SBMT",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
             "129.101.88.0/21"
         ],
         "descr": "",
@@ -1653239,19 +1653104,19 @@
         "inetnum": [
             "185.202.0.0/24"
         ],
-        "descr": "RTK-Tranzit leased lines dhcp costumers",
-        "netname": "RTKPRIM-NET RTK-MNT ALLIANCERU-MNT",
+        "descr": "LLC \"SMART CENTER\"",
+        "netname": "RU-DEDIC64 RTK-MNT ALLIANCERU-MNT",
         "country": "RU",
-        "org": ""
+        "org": "ORG-LC229-RIPE"
     },
     {
         "inetnum": [
             "159.200.201.0/24"
         ],
         "descr": "",
-        "netname": "ORG-GUL20-RIPE MNT-GCXC-EU RIPE-NCC-LEGACY-MNT",
+        "netname": "RU-TUNDRA-TC lir-ru-tundra-tc-1-MNT RIPE-NCC-LEGACY-MNT",
         "country": "RU",
-        "org": "ORG-GUL20-RIPE"
+        "org": "ORG-LT208-RIPE"
     },
     {
         "inetnum": [
@@ -1656827,7 +1656692,7 @@
             "193.34.12.0/22"
         ],
         "descr": "",
-        "netname": "ORG-UCST1-RIPE RIPE-DB-MNT RIPE-NCC-END-MNT",
+        "netname": "NET68-RU-NET RIPE-DB-MNT RIPE-NCC-END-MNT",
         "country": "RU",
         "org": "ORG-UCST1-RIPE"
     },
@@ -1657353,15 +1657218,6 @@
     },
     {
         "inetnum": [
-            "168.113.168.0/21"
-        ],
-        "descr": "",
-        "netname": "RU-ADMINVPS ru-adminvps-1-mnt RIPE-NCC-END-MNT",
-        "country": "RU",
-        "org": "ORG-AL501-RIPE"
-    },
-    {
-        "inetnum": [
             "168.113.160.0/21"
         ],
         "descr": "",
@@ -1657636,6 +1657492,375 @@
         ],
         "descr": "VK Cloud Solutions VK Hosting",
         "netname": "VKCS lir-ru-nextllc-1-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "90.188.202.0/24"
+        ],
+        "descr": "",
+        "netname": "ZETTELEKOM ROSTELECOM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "90.157.89.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.157.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.181.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.183.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.186.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.190.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.191.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.223.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.242.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "94.31.244.0/24"
+        ],
+        "descr": "LLC KOMTEHCENTR FTTB Customers Yekaterinburg, Russian Federation",
+        "netname": "MIRALOGIC-NET ROSTELECOM-MNT EXTRIM-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "168.113.168.0/21"
+        ],
+        "descr": "",
+        "netname": "RU-ADMINVPS-19940324 ru-adminvps-1-mnt RIPE-NCC-HM-MNT",
+        "country": "RU",
+        "org": "ORG-AL501-RIPE"
+    },
+    {
+        "inetnum": [
+            "176.101.184.0/22"
+        ],
+        "descr": "",
+        "netname": "ORG-OL286-RIPE lir-ru-sergienko-1-MNT RIPE-NCC-END-MNT",
+        "country": "RU",
+        "org": "ORG-OL286-RIPE"
+    },
+    {
+        "inetnum": [
+            "212.192.5.0/24"
+        ],
+        "descr": "",
+        "netname": "Customer interlir-mnt",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.64.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.65.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.66.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.67.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.68.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.69.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.70.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.71.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.72.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.73.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.74.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.75.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.76.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.77.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.78.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.79.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.16.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.17.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.18.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "136.234.19.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "130.49.208.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "130.49.209.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "130.49.210.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "130.49.211.0/24"
+        ],
+        "descr": "Selectel Network",
+        "netname": "SELECTEL-NET MNT-SELECTEL",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "95.164.52.0/24"
+        ],
+        "descr": "",
+        "netname": "TIPTOPVPN-NET MEREZHA-MNT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "143.246.176.192/32"
+        ],
+        "descr": "Network Russia",
+        "netname": "RU-NET KTB SBMT",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "146.255.24.232/30"
+        ],
+        "descr": "Residential broadband - Kazan",
+        "netname": "RU-KAZAN MNT-KRAJA",
         "country": "RU",
         "org": ""
     }
