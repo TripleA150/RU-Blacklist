@@ -282,8 +282,6 @@
 94.199.64.0/21
 # Network name: RU-FGS-20090305
 95.173.128.0/19
-# Network name: Electronic-government
-109.207.0.0/20
 # Network name: RU-MSRN-20100701
 178.237.240.0/20
 # Network name: GRFC-NET
