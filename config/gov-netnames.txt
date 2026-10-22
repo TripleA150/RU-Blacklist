@@ -83,11 +83,6 @@ netname: RU-FGS-20090305
 # descr: The Federal Guard Service of the Russian Federation
 # origin: AS8291
 
-# name: Электронное правительство (+ "Спутник")
-netname: Electronic-government
-# descr: OJSC Rostelecom
-# descr: Electronic government of the Russian Federation
-
 # name: Московская Городская Радио-частотная сеть (РСВО)
 netname: RU-MSRN-20100701
 # descr: Federal State Unitary Enterprise of the Order of the Red Banner of Labour "Russian Broad-casting and Notification Network"
