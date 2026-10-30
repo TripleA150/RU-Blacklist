@@ -7,3 +7,6 @@
 # Empty lines and lines starting with "#" are ignored. config/allowlist.txt still wins.
 #
 # Be careful with ASNs of large ISPs: they announce huge ranges.
+
+# Modat scanner
+AS209334
