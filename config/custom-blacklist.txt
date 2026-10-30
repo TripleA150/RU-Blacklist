@@ -17,5 +17,5 @@ AS197834
 # F6 scanner (RU)
 AS214664
 
-# Malw DC
+# Malw DC (SPB)
 AS34665
