@@ -247,6 +247,11 @@
 62.76.98.0/24
 # Networks announced by AS216080
 # AS-Name (ORG): FGUP-ZIT-AS (FSUE ZashchitaInfoTrans)
+# Networks announced by AS209334
+# AS-Name (ORG): MODAT-01 (Modat B.V.)
+85.217.140.0/24
+85.217.149.0/24
+212.73.148.0/24
 # Network name: Roskomnadzor-net
 46.228.0.232/29
 87.226.213.0/24
@@ -1464,8 +1469,6 @@
 87.237.47.204/30
 # NET-Name: 87.249.28.232/29 TEL-NET-12901 TEL-NET-MNT () [object-DOBROLYUBOVA8ASTR1, client-FGUP "Molmash" Rosselkhozakademii]
 87.249.28.232/29
-# NET-Name: 81.211.32.16/28 RU-SOVINTEL-MSK-NPP-VNIIEM-NET SOVINTEL-MNT () [101000 Russia Moscow, ZC-4827880 Horomniy tupik, 4, KL-2177438 FGUP NPP VNIIEM, http://www.vniiem.ru]
-81.211.32.16/28
 # NET-Name: 31.44.63.64/29 FGUP-KIM-RZN-NET INTERTELRZN-MNT () [RyazRGS FGUP-KIM]
 31.44.63.64/29
 # NET-Name: 83.229.181.192/26 GUVDKRS-NET TCNET-NOC () [GUVD Krasnodarskiy Kray]

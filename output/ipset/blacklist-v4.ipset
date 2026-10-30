@@ -1,7 +1,7 @@
 # IPSet blacklist configuration (IPv4 only)
 # Auto-generated from blacklist-v4.txt
-# Last updated: 2026-10-22 08:33:37 UTC
-# Total entries: 810
+# Last updated: 2026-10-30 08:53:33 UTC
+# Total entries: 812
 #
 # Usage:
 #   1. Load or refresh the set (safe to repeat while rules use it):
@@ -189,7 +189,6 @@ add blacklist-v4-tmp 81.195.244.32/29
 add blacklist-v4-tmp 81.195.245.0/28
 add blacklist-v4-tmp 81.195.247.128/28
 add blacklist-v4-tmp 81.195.250.16/29
-add blacklist-v4-tmp 81.211.32.16/28
 add blacklist-v4-tmp 81.222.194.200/29
 add blacklist-v4-tmp 81.222.209.136/29
 add blacklist-v4-tmp 81.222.210.24/29
@@ -297,6 +296,8 @@ add blacklist-v4-tmp 85.143.125.0/24
 add blacklist-v4-tmp 85.146.204.44/30
 add blacklist-v4-tmp 85.192.32.0/22
 add blacklist-v4-tmp 85.198.106.0/23
+add blacklist-v4-tmp 85.217.140.0/24
+add blacklist-v4-tmp 85.217.149.0/24
 add blacklist-v4-tmp 85.236.29.160/27
 add blacklist-v4-tmp 86.102.72.240/28
 add blacklist-v4-tmp 86.102.74.64/28
@@ -725,6 +726,7 @@ add blacklist-v4-tmp 212.57.133.0/24
 add blacklist-v4-tmp 212.57.159.0/24
 add blacklist-v4-tmp 212.59.98.48/29
 add blacklist-v4-tmp 212.59.99.96/27
+add blacklist-v4-tmp 212.73.148.0/24
 add blacklist-v4-tmp 212.111.84.0/22
 add blacklist-v4-tmp 212.119.174.0/23
 add blacklist-v4-tmp 212.120.169.48/29
