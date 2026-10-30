@@ -1,7 +1,7 @@
 # IPSet blacklist configuration (IPv4 only)
 # Auto-generated from blacklist-v4.txt
-# Last updated: 2026-10-30 08:53:33 UTC
-# Total entries: 812
+# Last updated: 2026-10-30 10:31:23 UTC
+# Total entries: 892
 #
 # Usage:
 #   1. Load or refresh the set (safe to repeat while rules use it):
@@ -19,14 +19,46 @@
 create blacklist-v4 hash:net family inet hashsize 1024 maxelem 65536 -exist
 create blacklist-v4-tmp hash:net family inet hashsize 1024 maxelem 65536 -exist
 flush blacklist-v4-tmp
+add blacklist-v4-tmp 5.8.8.0/21
+add blacklist-v4-tmp 5.8.16.0/24
+add blacklist-v4-tmp 5.8.18.0/24
+add blacklist-v4-tmp 5.8.46.0/23
+add blacklist-v4-tmp 5.8.48.0/21
+add blacklist-v4-tmp 5.8.57.0/24
+add blacklist-v4-tmp 5.8.60.0/23
 add blacklist-v4-tmp 5.61.16.0/21
 add blacklist-v4-tmp 5.61.232.0/21
+add blacklist-v4-tmp 5.101.0.0/21
+add blacklist-v4-tmp 5.101.32.0/22
 add blacklist-v4-tmp 5.101.40.0/22
+add blacklist-v4-tmp 5.101.45.0/24
+add blacklist-v4-tmp 5.101.46.0/24
+add blacklist-v4-tmp 5.101.64.0/22
+add blacklist-v4-tmp 5.101.80.0/21
+add blacklist-v4-tmp 5.101.90.0/23
 add blacklist-v4-tmp 5.181.60.0/22
+add blacklist-v4-tmp 5.188.44.0/22
+add blacklist-v4-tmp 5.188.48.0/23
+add blacklist-v4-tmp 5.188.60.0/23
 add blacklist-v4-tmp 5.188.140.0/22
+add blacklist-v4-tmp 5.188.166.0/24
+add blacklist-v4-tmp 5.188.200.0/23
+add blacklist-v4-tmp 5.188.202.0/24
+add blacklist-v4-tmp 5.188.204.0/23
+add blacklist-v4-tmp 5.188.208.0/22
+add blacklist-v4-tmp 5.188.216.0/22
+add blacklist-v4-tmp 5.188.223.0/24
+add blacklist-v4-tmp 5.188.233.0/24
+add blacklist-v4-tmp 5.189.248.0/22
 add blacklist-v4-tmp 31.44.63.64/29
+add blacklist-v4-tmp 31.44.188.0/22
 add blacklist-v4-tmp 31.177.95.0/24
 add blacklist-v4-tmp 31.177.104.0/22
+add blacklist-v4-tmp 31.184.192.0/21
+add blacklist-v4-tmp 31.184.238.0/23
+add blacklist-v4-tmp 31.184.240.0/23
+add blacklist-v4-tmp 31.184.243.0/24
+add blacklist-v4-tmp 37.9.48.0/24
 add blacklist-v4-tmp 37.28.161.48/30
 add blacklist-v4-tmp 37.29.53.16/30
 add blacklist-v4-tmp 37.29.57.52/30
@@ -34,8 +66,13 @@ add blacklist-v4-tmp 37.29.57.64/30
 add blacklist-v4-tmp 37.29.59.56/30
 add blacklist-v4-tmp 37.139.32.0/22
 add blacklist-v4-tmp 37.139.40.0/22
+add blacklist-v4-tmp 37.139.49.0/24
+add blacklist-v4-tmp 37.139.53.0/24
+add blacklist-v4-tmp 37.139.56.0/22
 add blacklist-v4-tmp 45.84.128.0/22
+add blacklist-v4-tmp 45.91.64.0/24
 add blacklist-v4-tmp 45.136.20.0/22
+add blacklist-v4-tmp 45.143.202.0/24
 add blacklist-v4-tmp 46.20.70.160/28
 add blacklist-v4-tmp 46.29.152.0/22
 add blacklist-v4-tmp 46.29.156.0/23
@@ -57,6 +94,15 @@ add blacklist-v4-tmp 46.47.229.0/28
 add blacklist-v4-tmp 46.47.238.144/30
 add blacklist-v4-tmp 46.47.249.176/29
 add blacklist-v4-tmp 46.61.208.0/24
+add blacklist-v4-tmp 46.161.2.0/23
+add blacklist-v4-tmp 46.161.8.0/24
+add blacklist-v4-tmp 46.161.10.0/24
+add blacklist-v4-tmp 46.161.14.0/23
+add blacklist-v4-tmp 46.161.20.0/22
+add blacklist-v4-tmp 46.161.28.0/22
+add blacklist-v4-tmp 46.161.32.0/22
+add blacklist-v4-tmp 46.161.44.0/22
+add blacklist-v4-tmp 46.161.48.0/22
 add blacklist-v4-tmp 46.228.0.232/29
 add blacklist-v4-tmp 46.245.234.0/24
 add blacklist-v4-tmp 62.5.130.104/29
@@ -152,6 +198,7 @@ add blacklist-v4-tmp 81.15.172.120/29
 add blacklist-v4-tmp 81.15.172.128/26
 add blacklist-v4-tmp 81.17.2.192/28
 add blacklist-v4-tmp 81.17.3.16/29
+add blacklist-v4-tmp 81.19.133.0/24
 add blacklist-v4-tmp 81.176.70.0/26
 add blacklist-v4-tmp 81.176.235.0/27
 add blacklist-v4-tmp 81.177.12.0/24
@@ -336,6 +383,8 @@ add blacklist-v4-tmp 87.249.30.176/30
 add blacklist-v4-tmp 88.83.195.248/30
 add blacklist-v4-tmp 88.151.200.0/24
 add blacklist-v4-tmp 88.200.208.112/29
+add blacklist-v4-tmp 88.218.72.0/22
+add blacklist-v4-tmp 89.19.218.0/24
 add blacklist-v4-tmp 89.21.129.16/28
 add blacklist-v4-tmp 89.21.140.104/29
 add blacklist-v4-tmp 89.21.152.104/29
@@ -401,6 +450,11 @@ add blacklist-v4-tmp 91.226.250.0/24
 add blacklist-v4-tmp 91.227.32.0/24
 add blacklist-v4-tmp 91.231.132.0/22
 add blacklist-v4-tmp 91.237.76.0/24
+add blacklist-v4-tmp 91.243.32.0/22
+add blacklist-v4-tmp 91.243.44.0/22
+add blacklist-v4-tmp 91.243.48.0/21
+add blacklist-v4-tmp 91.243.56.0/22
+add blacklist-v4-tmp 91.243.60.0/23
 add blacklist-v4-tmp 92.38.217.0/24
 add blacklist-v4-tmp 92.39.106.20/30
 add blacklist-v4-tmp 92.39.106.168/30
@@ -410,6 +464,9 @@ add blacklist-v4-tmp 92.50.198.72/30
 add blacklist-v4-tmp 92.50.198.124/30
 add blacklist-v4-tmp 92.50.219.136/29
 add blacklist-v4-tmp 92.50.238.224/29
+add blacklist-v4-tmp 92.51.3.0/24
+add blacklist-v4-tmp 92.63.200.0/24
+add blacklist-v4-tmp 92.63.202.0/24
 add blacklist-v4-tmp 92.101.253.96/29
 add blacklist-v4-tmp 92.101.253.152/29
 add blacklist-v4-tmp 93.153.134.112/29
@@ -494,7 +551,9 @@ add blacklist-v4-tmp 95.167.176.0/23
 add blacklist-v4-tmp 95.167.213.0/24
 add blacklist-v4-tmp 95.173.128.0/19
 add blacklist-v4-tmp 95.213.0.0/17
+add blacklist-v4-tmp 95.215.0.0/22
 add blacklist-v4-tmp 109.73.4.224/27
+add blacklist-v4-tmp 109.75.32.0/23
 add blacklist-v4-tmp 109.120.180.0/22
 add blacklist-v4-tmp 109.120.188.0/22
 add blacklist-v4-tmp 109.124.66.128/30
@@ -522,13 +581,24 @@ add blacklist-v4-tmp 138.16.192.0/20
 add blacklist-v4-tmp 138.16.240.0/20
 add blacklist-v4-tmp 141.136.118.32/28
 add blacklist-v4-tmp 145.255.238.240/28
+add blacklist-v4-tmp 146.185.204.0/22
 add blacklist-v4-tmp 146.185.208.0/22
+add blacklist-v4-tmp 146.185.223.0/24
+add blacklist-v4-tmp 146.185.224.0/21
+add blacklist-v4-tmp 146.185.239.0/24
 add blacklist-v4-tmp 146.185.240.0/22
+add blacklist-v4-tmp 146.185.245.0/24
+add blacklist-v4-tmp 147.45.34.0/24
+add blacklist-v4-tmp 147.45.36.0/24
+add blacklist-v4-tmp 147.45.64.0/24
+add blacklist-v4-tmp 147.45.192.0/24
+add blacklist-v4-tmp 147.45.207.0/24
 add blacklist-v4-tmp 149.62.55.240/30
 add blacklist-v4-tmp 155.212.192.0/20
 add blacklist-v4-tmp 160.5.208.0/20
 add blacklist-v4-tmp 161.104.104.0/21
 add blacklist-v4-tmp 168.113.128.0/20
+add blacklist-v4-tmp 176.32.192.0/21
 add blacklist-v4-tmp 176.109.0.0/21
 add blacklist-v4-tmp 176.112.168.0/21
 add blacklist-v4-tmp 176.116.96.0/20
@@ -587,6 +657,7 @@ add blacklist-v4-tmp 185.100.104.0/22
 add blacklist-v4-tmp 185.130.112.0/22
 add blacklist-v4-tmp 185.131.68.0/22
 add blacklist-v4-tmp 185.149.160.0/22
+add blacklist-v4-tmp 185.156.75.0/24
 add blacklist-v4-tmp 185.168.60.0/22
 add blacklist-v4-tmp 185.179.224.0/22
 add blacklist-v4-tmp 185.180.200.0/22
@@ -611,17 +682,26 @@ add blacklist-v4-tmp 188.128.115.232/29
 add blacklist-v4-tmp 188.128.118.224/27
 add blacklist-v4-tmp 188.128.119.104/30
 add blacklist-v4-tmp 188.128.122.240/30
+add blacklist-v4-tmp 188.143.232.0/22
 add blacklist-v4-tmp 188.247.36.124/30
 add blacklist-v4-tmp 188.247.36.128/28
 add blacklist-v4-tmp 188.247.36.204/30
 add blacklist-v4-tmp 193.47.146.0/24
+add blacklist-v4-tmp 193.93.192.0/22
 add blacklist-v4-tmp 193.203.40.0/22
 add blacklist-v4-tmp 193.232.70.0/24
+add blacklist-v4-tmp 193.233.30.0/24
+add blacklist-v4-tmp 193.233.61.0/24
+add blacklist-v4-tmp 193.233.112.0/23
+add blacklist-v4-tmp 193.233.197.0/24
+add blacklist-v4-tmp 193.233.234.0/24
 add blacklist-v4-tmp 194.8.70.0/23
 add blacklist-v4-tmp 194.8.246.0/23
+add blacklist-v4-tmp 194.28.208.0/22
 add blacklist-v4-tmp 194.67.63.200/30
 add blacklist-v4-tmp 194.84.16.12/30
 add blacklist-v4-tmp 194.140.247.0/24
+add blacklist-v4-tmp 194.150.179.0/24
 add blacklist-v4-tmp 194.150.202.0/23
 add blacklist-v4-tmp 194.165.22.0/23
 add blacklist-v4-tmp 194.186.63.0/24
