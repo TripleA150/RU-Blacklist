@@ -1755,7 +1755,6 @@
 2a0f:6a40::/29 RU-RESOURCE-M-20191112 (Resource-M LLC)
 2a0f:6c80::/29 RU-TKTOR-20190930 (TC TOR LLC)
 2a0f:6d40::/29 RU-SERGIENKO-20191112 (Nikita Sergienko)
-2a0f:6f40::/29 RU-NON-PUBLIC-20221003 (Joint-stock companies "Sakhalinsvyaz")
 2a0f:6f80::/29 RU-GARANT-PARK-INTERNET-20190930 (Garant-Park-Internet LLC)
 2a0f:6fc0::/29 RU-LOCAL-20191112 (LIR LLC)
 2a0f:7000::/29 RU-PODRYAD-20190828 (Natalia Sergeevna Filicheva)
