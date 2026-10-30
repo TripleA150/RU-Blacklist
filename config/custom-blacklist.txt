@@ -10,3 +10,12 @@
 
 # Modat scanner
 AS209334
+
+# Ucom scanner
+AS197834
+
+# F6 scanner (RU)
+AS214664
+
+# Malw DC
+AS34665
