@@ -1,7 +1,7 @@
 # IPSet blacklist configuration (IPv4 only)
 # Auto-generated from blacklist-v4.txt
-# Last updated: 2026-10-30 10:31:23 UTC
-# Total entries: 892
+# Last updated: 2026-11-02 10:42:38 UTC
+# Total entries: 891
 #
 # Usage:
 #   1. Load or refresh the set (safe to repeat while rules use it):
@@ -338,7 +338,6 @@ add blacklist-v4-tmp 85.141.33.64/28
 add blacklist-v4-tmp 85.141.60.96/28
 add blacklist-v4-tmp 85.141.61.160/28
 add blacklist-v4-tmp 85.142.115.0/24
-add blacklist-v4-tmp 85.142.251.0/24
 add blacklist-v4-tmp 85.143.125.0/24
 add blacklist-v4-tmp 85.146.204.44/30
 add blacklist-v4-tmp 85.192.32.0/22

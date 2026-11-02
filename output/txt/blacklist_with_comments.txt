@@ -183,7 +183,6 @@
 # Networks announced by AS49988
 # AS-Name (ORG): odkl-as (LLC VK)
 79.137.140.0/24
-85.142.251.0/24
 85.198.107.0/24
 # Networks announced by AS51932
 # AS-Name (ORG): ORVD-AS (FGUP Goskorporatsiya po OrVD)
@@ -204,7 +203,6 @@
 46.245.234.0/24
 89.221.233.0/24
 89.221.234.0/24
-195.211.22.0/24
 # Networks announced by AS60863
 # AS-Name (ORG): VK-AS (LLC VK)
 185.6.244.0/22
