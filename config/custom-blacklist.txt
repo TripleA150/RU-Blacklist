@@ -19,3 +19,6 @@ AS214664
 
 # Malw DC (SPB)
 AS34665
+
+# Other scanners
+AS206092
