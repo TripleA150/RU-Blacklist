@@ -1,7 +1,7 @@
 # IPSet blacklist configuration (IPv6 only)
 # Auto-generated from blacklist-v6.txt
-# Last updated: 2026-10-30 10:31:23 UTC
-# Total entries: 21
+# Last updated: 2026-11-05 16:21:19 UTC
+# Total entries: 28
 #
 # Usage:
 #   1. Load or refresh the set (safe to repeat while rules use it):
@@ -22,6 +22,12 @@ flush blacklist-v6-tmp
 add blacklist-v6-tmp 2001:678:85c::/48
 add blacklist-v6-tmp 2001:67c:1b10::/48
 add blacklist-v6-tmp 2001:67c:21c4::/48
+add blacklist-v6-tmp 2001:b08:e::/48
+add blacklist-v6-tmp 2001:b08:15::/48
+add blacklist-v6-tmp 2001:b08:20::/48
+add blacklist-v6-tmp 2001:b08:25::/48
+add blacklist-v6-tmp 2001:b08:26::/47
+add blacklist-v6-tmp 2a00:db8::/32
 add blacklist-v6-tmp 2a00:1148::/29
 add blacklist-v6-tmp 2a00:1d78:100:1c0::/58
 add blacklist-v6-tmp 2a00:46e0::/32
@@ -29,6 +35,7 @@ add blacklist-v6-tmp 2a00:a300::/32
 add blacklist-v6-tmp 2a00:b4c0::/29
 add blacklist-v6-tmp 2a00:bdc0::/29
 add blacklist-v6-tmp 2a06:35c1::/32
+add blacklist-v6-tmp 2a07:a6c4::/32
 add blacklist-v6-tmp 2a0b:d000::/29
 add blacklist-v6-tmp 2a0c:6900::/29
 add blacklist-v6-tmp 2a0c:8e47::/45
