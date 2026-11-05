@@ -27,7 +27,7 @@ def is_prefix(token):
     return True
 
 
-@pytest.mark.parametrize("name", ["custom-blacklist.txt"])
+@pytest.mark.parametrize("name", ["custom-blacklist.txt", "ptr-scan.txt"])
 def test_custom_lists_contain_asns_or_prefixes(name):
     bad = [f"config/{name}:{lineno}: {token!r}" for lineno, token in entries(name) if not (ASN_RE.fullmatch(token) or is_prefix(token))]
     assert not bad, "entries must be an ASN (AS12345) or a prefix (203.0.113.0/24):\n" + "\n".join(bad)
@@ -61,3 +61,9 @@ def test_vk_patterns_compile():
             ["awk", 'BEGIN { if ("" ~ ENVIRON["P"]) {} }'], env={"P": pattern}, capture_output=True, text=True, check=False
         )
         assert result.returncode == 0, f"config/vk-names.txt: invalid pattern {pattern!r}: {result.stderr.strip()}"
+
+
+def test_ptr_keywords_compile():
+    assert patterns("ptr-keywords.txt"), "config/ptr-keywords.txt has no keywords"
+    for pattern in patterns("ptr-keywords.txt"):
+        re.compile(pattern)

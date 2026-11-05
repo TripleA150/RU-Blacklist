@@ -9,6 +9,8 @@ config/          что вы правите руками
   gov-netnames.txt     netname'ы гос. сетей (whois)
   custom-blacklist.txt свои ASN и префиксы
   allowlist.txt        префиксы, которые никогда не блокируются
+  ptr-scan.txt         префиксы/ASN, где проверяются PTR-записи
+  ptr-keywords.txt     ключевые слова в PTR (например, tspu); совпавшие IP идут в блок-лист как /32
   vk-names.txt         паттерны для VK-списков
   vk-exclude.txt       исключения для VK-списков
 data/            данные RIPE, обновляются автоматически (scripts/refresh-ripe-data.sh)

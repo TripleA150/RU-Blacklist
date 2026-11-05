@@ -1,0 +1,5 @@
+# Regular expressions (Python syntax, case-insensitive), one per line: an address
+# from config/ptr-scan.txt whose PTR name matches any of them is blacklisted.
+
+# TSPU (DPI boxes installed under the "sovereign internet" law)
+tspu

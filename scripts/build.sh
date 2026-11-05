@@ -11,6 +11,7 @@
 #   - networks registered under the netnames in config/gov-netnames.txt,
 #   - data/ networks whose names match config/black-names.txt,
 #   - your own ASNs and prefixes from config/custom-blacklist.txt,
+#   - addresses in config/ptr-scan.txt whose PTR name matches config/ptr-keywords.txt,
 # minus config/allowlist.txt. Any failure aborts the run before the published
 # files are touched, so a partial list is never written.
 
@@ -58,6 +59,7 @@ build_text_lists() {
     {
         "${PYTHON}" -m ru_blacklist.asn "${black_ass_tmp}"
         "${PYTHON}" -m ru_blacklist.netname "${GOV_NETNAMES_FILE}"
+        "${PYTHON}" -m ru_blacklist.ptr "${PTR_SCAN_FILE}" "${PTR_KEYWORDS_FILE}"
         match_names "${DATA_ALL_V4_FILE}" "NET-Name"
         match_names "${DATA_ALL_V6_FILE}" "NET-Name"
         match_names "${DATA_RIPE_V4_FILE}" "NET-Name"
