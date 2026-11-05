@@ -8,6 +8,9 @@
 #
 # Be careful with ASNs of large ISPs: they announce huge ranges.
 
+# National Research Computer Network of Russia
+AS3267
+
 # Modat scanner
 AS209334
 
