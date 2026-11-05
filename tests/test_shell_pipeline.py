@@ -53,6 +53,8 @@ print("78.108.192.0/21")
 def repo(tmp_path):
     shutil.copytree(REPO / "scripts", tmp_path / "scripts")
     shutil.copytree(REPO / "config", tmp_path / "config")
+    # Tests must not depend on the entries you keep in your own custom list.
+    (tmp_path / "config" / "custom-blacklist.txt").write_text("", encoding="utf-8")
     shutil.copytree(REPO / "ru_blacklist", tmp_path / "ru_blacklist", ignore=shutil.ignore_patterns("__pycache__"))
     (tmp_path / "data").mkdir()
     for name, content in DATA.items():
@@ -60,6 +62,9 @@ def repo(tmp_path):
     # The network lookups are replaced by stubs that answer from fixed tables.
     (tmp_path / "ru_blacklist" / "asn.py").write_text(STUB_AS, encoding="utf-8")
     (tmp_path / "ru_blacklist" / "netname.py").write_text(STUB_NETNAME, encoding="utf-8")
+    (tmp_path / "ru_blacklist" / "ptr.py").write_text(
+        'print("# PTR: 80.64.97.53 tspu-1.example")\nprint("80.64.97.53/32")\n', encoding="utf-8"
+    )
     return tmp_path
 
 
@@ -113,6 +118,7 @@ def test_build_makes_aggregated_filtered_lists(repo):
     assert "192.0.2.0/24" in blacklist, "adjacent /25s are collapsed"
     assert "78.108.192.0/22" in blacklist and "78.108.199.0/24" not in blacklist, "allowlist is cut out"
     assert "2a00:bdc0::/29" in blacklist, "IPv6 allocations are matched too"
+    assert "80.64.97.53/32" in blacklist, "PTR keyword matches are added"
     assert lines(txt / "blacklist-v6.txt") == ["2a00:bdc0::/29"]
     assert "100.64.0.0/24" not in blacklist
 

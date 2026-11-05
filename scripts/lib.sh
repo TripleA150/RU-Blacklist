@@ -21,6 +21,8 @@ ROUTES_DIR="${OUTPUT_DIR}/routes"
 # Hand-edited configuration
 GOV_NETNAMES_FILE="${CONFIG_DIR}/gov-netnames.txt"
 CUSTOM_BLACKLIST_FILE="${CONFIG_DIR}/custom-blacklist.txt"
+PTR_SCAN_FILE="${CONFIG_DIR}/ptr-scan.txt"
+PTR_KEYWORDS_FILE="${CONFIG_DIR}/ptr-keywords.txt"
 ALLOWLIST_FILE="${CONFIG_DIR}/allowlist.txt"
 VK_NAME_EXCLUDE_FILE="${CONFIG_DIR}/vk-exclude.txt"
 
