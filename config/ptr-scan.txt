@@ -4,5 +4,5 @@
 # Every address is resolved, so keep the total small (at most 262144 addresses);
 # matches go to the main blacklist as /32. IPv6 is skipped.
 
-# RASCOM: TSPU boxes such as tspu-6364.no-hope.msk-m9-cr5.rascom.as20764.net
-80.64.96.0/20
+# RASCOM
+AS20764
