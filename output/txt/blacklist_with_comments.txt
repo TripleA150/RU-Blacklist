@@ -1021,6 +1021,16 @@
 80.64.97.69/32
 # PTR: 80.64.97.71 tspu-1152.no-hope.spb-ivc-cr2.ae666-3006.rascom.as20764.net
 80.64.97.71/32
+# PTR: 80.64.111.13 rkn-rs.rascom.ru
+80.64.111.13/32
+# PTR: 80.64.111.22 skat-ui-msk.rascom.ru
+80.64.111.22/32
+# PTR: 80.64.111.65 skat-msk.rascom.ru
+80.64.111.65/32
+# PTR: 80.64.111.67 skat-spb.rascom.ru
+80.64.111.67/32
+# PTR: 80.64.111.73 skat-spb2.rascom.as20764.net
+80.64.111.73/32
 # NET-Name: 5.61.16.0/21 RU-ODNOKLASSNIKI-20120607 (LLC VK)
 5.61.16.0/21
 # NET-Name: 5.61.232.0/21 RU-NETBRIDGE-20120611 (LLC VK)
