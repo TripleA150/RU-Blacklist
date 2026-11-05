@@ -1001,6 +1001,26 @@
 89.111.176.0/22
 # Network name: RU-NIC-HOSTING
 31.177.95.0/24
+# PTR: 80.64.97.53 tspu-6364.no-hope.msk-m9-cr5.ae666-3001.rascom.as20764.net
+80.64.97.53/32
+# PTR: 80.64.97.55 tspu-6364.no-hope.msk-m9-cr5.ae666-3002.rascom.as20764.net
+80.64.97.55/32
+# PTR: 80.64.97.57 tspu-6364.no-hope.msk-m9-cr5.rascom.as20764.net
+80.64.97.57/32
+# PTR: 80.64.97.59 tspu-6364.no-hope.msk-m9-cr5.rascom.as20764.net
+80.64.97.59/32
+# PTR: 80.64.97.61 tspu-1152.no-hope.spb-ivc-cr2.ae666-3001.rascom.as20764.net
+80.64.97.61/32
+# PTR: 80.64.97.63 tspu-1152.no-hope.spb-ivc-cr2.ae666-3002.rascom.as20764.net
+80.64.97.63/32
+# PTR: 80.64.97.65 tspu-1152.no-hope.ae666-3003.rascom.as20764.net
+80.64.97.65/32
+# PTR: 80.64.97.67 tspu-1152.no-hope.ae666-3004.rascom.as20764.net
+80.64.97.67/32
+# PTR: 80.64.97.69 tspu-1152.no-hope.spb-ivc-cr2.ae666-3005.rascom.as20764.net
+80.64.97.69/32
+# PTR: 80.64.97.71 tspu-1152.no-hope.spb-ivc-cr2.ae666-3006.rascom.as20764.net
+80.64.97.71/32
 # NET-Name: 5.61.16.0/21 RU-ODNOKLASSNIKI-20120607 (LLC VK)
 5.61.16.0/21
 # NET-Name: 5.61.232.0/21 RU-NETBRIDGE-20120611 (LLC VK)
