@@ -1,6 +1,0 @@
-# Regular expressions (Python syntax, case-insensitive), one per line: an address
-# from config/ptr-scan.txt whose PTR name matches any of them is blacklisted.
-
-(^|[.-])(tspu|sorm|ecofilter|ecosge|skat|dpi|rkn)([0-9.-]|$)
-no-hope
-blackbox

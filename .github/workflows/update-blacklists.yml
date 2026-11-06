@@ -46,13 +46,9 @@ jobs:
         run: |
           max_shrink=0.25
           [ "${SKIP_GUARD}" = "true" ] && max_shrink=1
-          status=0
-          for list in blacklist.txt blacklist-vk.txt; do
-            git show "HEAD:output/txt/${list}" > "${RUNNER_TEMP}/${list}" 2> /dev/null || : > "${RUNNER_TEMP}/${list}"
-            python -m ru_blacklist.diff "${RUNNER_TEMP}/${list}" "output/txt/${list}" --label "${list}" \
-              --max-shrink "${max_shrink}" --summary "${GITHUB_STEP_SUMMARY}" > /dev/null || status=$?
-          done
-          exit "${status}"
+          git show HEAD:output/txt/blacklist.txt > "${RUNNER_TEMP}/old.txt" 2> /dev/null || : > "${RUNNER_TEMP}/old.txt"
+          python -m ru_blacklist.diff "${RUNNER_TEMP}/old.txt" output/txt/blacklist.txt --label blacklist.txt \
+            --max-shrink "${max_shrink}" --summary "${GITHUB_STEP_SUMMARY}" > /dev/null
 
       - uses: ./.github/actions/commit-push
         with:

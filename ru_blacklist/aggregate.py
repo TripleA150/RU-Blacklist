@@ -4,7 +4,7 @@ Validates, de-duplicates and collapses IP prefixes into the minimal CIDR list,
 optionally removing allowlisted ranges.
 Usage:
   python3 -m ru_blacklist.aggregate output/txt/blacklist_with_comments.txt -o output/txt/blacklist.txt
-  python3 -m ru_blacklist.aggregate --family 4 --exclude config/allowlist.txt output/txt/blacklist.txt
+  python3 -m ru_blacklist.aggregate --family 4 --exclude allow.txt output/txt/blacklist.txt
   cat prefixes.txt | python3 -m ru_blacklist.aggregate
 """
 

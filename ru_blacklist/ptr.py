@@ -4,7 +4,7 @@ Resolves PTR records of every address in the given prefixes/ASNs and prints the
 addresses whose reverse name matches a keyword (e.g. TSPU/DPI boxes named
 "tspu-6364.no-hope.msk-m9-cr5.rascom.as20764.net").
 Usage:
-  python3 -m ru_blacklist.ptr config/ptr-scan.txt config/ptr-keywords.txt
+  python3 -m ru_blacklist.ptr scan.txt keywords.txt   # scripts/build.sh feeds the "ptr"/"ptr-key" rules
 """
 
 import argparse
@@ -46,7 +46,7 @@ def find_matches(networks, pattern, resolve=reverse_name, workers=64):
     """Yield (address, name) for addresses whose PTR name matches ``pattern``."""
     total = sum(n.num_addresses for n in networks)
     if total > MAX_ADDRESSES:
-        raise ValueError(f"{total} addresses to scan, more than {MAX_ADDRESSES}; narrow config/ptr-scan.txt")
+        raise ValueError(f"{total} addresses to scan, more than {MAX_ADDRESSES}; narrow the 'ptr' rules in config/rules.txt")
     addresses = [str(a) for n in networks for a in n]
     with ThreadPoolExecutor(workers) as pool:
         for address, name in zip(addresses, pool.map(resolve, addresses), strict=True):

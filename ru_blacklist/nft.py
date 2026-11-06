@@ -19,25 +19,10 @@ from datetime import datetime, timezone
 from ipaddress import collapse_addresses, ip_network
 from pathlib import Path
 
-PROFILES = {
-    "vm_input": {
-        "sets": {"4": "blacklist_v4", "6": "blacklist_v6"},
-        "title": "VM protection from incoming blacklist sources",
-        "chain": "sudo nft add chain inet filter input '{ type filter hook input priority 0; policy accept; }'",
-        "rules": {
-            "4": "sudo nft add rule inet filter input ip saddr @blacklist_v4 counter reject",
-            "6": "sudo nft add rule inet filter input ip6 saddr @blacklist_v6 counter reject",
-        },
-    },
-    "vk_forward": {
-        "sets": {"4": "blacklist_vk_v4", "6": "blacklist_vk_v6"},
-        "title": "VK egress blocking for VPN clients via NAT/FORWARD",
-        "chain": "sudo nft add chain inet filter forward '{ type filter hook forward priority 0; policy accept; }'",
-        "rules": {
-            "4": 'sudo nft add rule inet filter forward iifname "<VPN_IFACE>" ip daddr @blacklist_vk_v4 counter reject',
-            "6": 'sudo nft add rule inet filter forward iifname "<VPN_IFACE>" ip6 daddr @blacklist_vk_v6 counter reject',
-        },
-    },
+SET_NAMES = {"4": "blacklist_v4", "6": "blacklist_v6"}
+RULES = {
+    "4": "sudo nft add rule inet filter input ip saddr @blacklist_v4 counter reject",
+    "6": "sudo nft add rule inet filter input ip6 saddr @blacklist_v6 counter reject",
 }
 SET_TYPES = {"4": "ipv4_addr", "6": "ipv6_addr"}
 FAMILIES = {"4": ("4",), "6": ("6",), "both": ("4", "6")}
@@ -65,10 +50,6 @@ def aggregate_prefixes(lines):
             continue
         (v4 if net.version == 4 else v6).append(net)
     return list(collapse_addresses(v4)), list(collapse_addresses(v6)), invalid
-
-
-def detect_profile(source):
-    return "vk_forward" if "vk" in Path(source).name.lower() else "vm_input"
 
 
 def detect_family(source):
@@ -99,8 +80,7 @@ def _set_block(name, set_type, elements):
     return lines
 
 
-def make_nft_config(agg_v4, agg_v6, comment=None, usage_profile="vm_input", family="both"):
-    profile = PROFILES[usage_profile]
+def make_nft_config(agg_v4, agg_v6, comment=None, family="both"):
     versions = FAMILIES[family]
     elements = {"4": agg_v4, "6": agg_v6}
 
@@ -112,22 +92,21 @@ def make_nft_config(agg_v4, agg_v6, comment=None, usage_profile="vm_input", fami
     lines.append("#")
     lines.append("# Usage:")
     lines.append("#   sudo nft -f <this-file>")
-    lines.append(f"#   # {profile['title']}")
-    lines.append(f"#   {profile['chain']}")
-    lines.extend(f"#   {profile['rules'][v]}" for v in versions)
+    lines.append("#   sudo nft add chain inet filter input '{ type filter hook input priority 0; policy accept; }'")
+    lines.extend(f"#   {RULES[v]}" for v in versions)
     lines.append("#")
     lines.append("# Reloading is safe: the sets are flushed and refilled in one atomic transaction.")
     lines.append("")
 
     # 1. Make sure the table and sets exist (no-op if they already do).
     for v in versions:
-        lines += _set_block(profile["sets"][v], SET_TYPES[v], [])
+        lines += _set_block(SET_NAMES[v], SET_TYPES[v], [])
     # 2. Drop old elements, 3. add the current ones. nft -f applies all of it atomically.
     for v in versions:
-        lines.append(f"flush set inet filter {profile['sets'][v]}")
+        lines.append(f"flush set inet filter {SET_NAMES[v]}")
     lines.append("")
     for v in versions:
-        lines += _set_block(profile["sets"][v], SET_TYPES[v], elements[v])
+        lines += _set_block(SET_NAMES[v], SET_TYPES[v], elements[v])
         lines.append("")
 
     return "\n".join(lines)
@@ -146,8 +125,6 @@ def build_parser():
     parser = argparse.ArgumentParser(description="Generate a reload-safe nftables blacklist from a list of prefixes.")
     parser.add_argument("input", help="Input file with one prefix per line ('-' for STDIN).")
     parser.add_argument("output", help="Output nftables file ('-' for STDOUT).")
-    parser.add_argument("--profile", choices=["auto", *PROFILES], default="auto",
-                        help="Set names/usage example; 'auto' picks vk_forward if the input name contains 'vk'.")
     parser.add_argument("--family", choices=["auto", *FAMILIES], default="auto",
                         help="Which sets to emit; 'auto' uses the -v4/-v6 suffix of the input name.")
     parser.add_argument("-q", "--quiet", action="store_true", help="Only print errors.")
@@ -172,7 +149,6 @@ def main(argv=None):
         print("WARNING: input contains no prefixes; writing empty sets.", file=sys.stderr)
 
     source = "stdin" if args.input == "-" else args.input
-    profile = detect_profile(source) if args.profile == "auto" else args.profile
     family = detect_family(source) if args.family == "auto" else args.family
     if family == "4" and agg_v6:
         log(f"Ignoring {len(agg_v6)} IPv6 prefixes (--family 4)")
@@ -186,8 +162,7 @@ def main(argv=None):
         for n in agg_v4 + agg_v6:
             log(f"  {n}")
 
-    nft_conf = make_nft_config(agg_v4, agg_v6, comment=f"Source: {Path(source).name}",
-                               usage_profile=profile, family=family)
+    nft_conf = make_nft_config(agg_v4, agg_v6, comment=f"Source: {Path(source).name}", family=family)
     try:
         write_output(args.output, nft_conf)
     except OSError as e:

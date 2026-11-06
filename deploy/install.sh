@@ -33,7 +33,7 @@ install_file ru-blacklist-update.service /etc/systemd/system/ru-blacklist-update
 install_file ru-blacklist-update.timer /etc/systemd/system/ru-blacklist-update.timer 0644
 if [ ! -f /etc/ru-blacklist.conf ]; then
     install_file ru-blacklist.conf.example /etc/ru-blacklist.conf 0644
-    echo "Created /etc/ru-blacklist.conf: review BACKEND, VPN_IFACES and ALLOW_PREFIXES."
+    echo "Created /etc/ru-blacklist.conf: review BACKEND and ALLOW_PREFIXES."
 fi
 
 systemctl daemon-reload

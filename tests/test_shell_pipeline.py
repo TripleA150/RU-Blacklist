@@ -52,10 +52,11 @@ print("78.108.192.0/21")
 @pytest.fixture
 def repo(tmp_path):
     shutil.copytree(REPO / "scripts", tmp_path / "scripts")
-    shutil.copytree(REPO / "config", tmp_path / "config")
-    # Tests must not depend on the entries you keep in your own custom list.
-    (tmp_path / "config" / "custom-blacklist.txt").write_text("", encoding="utf-8")
     shutil.copytree(REPO / "ru_blacklist", tmp_path / "ru_blacklist", ignore=shutil.ignore_patterns("__pycache__"))
+    # Keep the real name patterns under test, but not your own ASNs, prefixes and PTR targets.
+    kept = [line for line in lines(REPO / "config" / "rules.txt") if line.startswith(("name ", "!name "))]
+    (tmp_path / "config").mkdir()
+    (tmp_path / "config" / "rules.txt").write_text("\n".join([*kept, "ptr 80.64.96.0/20", "ptr-key tspu", ""]), encoding="utf-8")
     (tmp_path / "data").mkdir()
     for name, content in DATA.items():
         (tmp_path / "data" / name).write_text("".join(f"{line}\n" for line in content), encoding="utf-8")
@@ -66,6 +67,11 @@ def repo(tmp_path):
         'print("# PTR: 80.64.97.53 tspu-1.example")\nprint("80.64.97.53/32")\n', encoding="utf-8"
     )
     return tmp_path
+
+
+def add_rules(repo, *new):
+    with open(repo / "config" / "rules.txt", "a", encoding="utf-8") as rules:
+        rules.writelines(f"{line}\n" for line in new)
 
 
 def build(repo, *args, **env):
@@ -96,33 +102,31 @@ def test_black_names_match_whole_word_vk_as_only(repo):
     assert not matches_black_names(repo, "192.0.2.0/24 X [mailXru]")
 
 
-def test_pattern_file_without_patterns_is_an_error(repo):
-    (repo / "config" / "black-names.txt").write_text("# only comments\n\n", encoding="utf-8")
+def test_rules_without_name_patterns_are_an_error(repo):
+    (repo / "config" / "rules.txt").write_text("# only comments\nAS64500\n", encoding="utf-8")
     result = build(repo)
     assert result.returncode != 0
-    assert "no patterns" in result.stderr
+    assert "no 'name' rules" in result.stderr
 
 
 def test_build_makes_aggregated_filtered_lists(repo):
-    (repo / "config" / "allowlist.txt").write_text("78.108.199.0/24\n", encoding="utf-8")
+    add_rules(repo, "!78.108.199.0/24")
     result = build(repo)
     assert result.returncode == 0, result.stderr
 
     black_ass = lines(repo / "data" / "black_ass.txt")
     assert "AS47764" in black_ass and "AS61280" in black_ass
     assert "AS43038" not in black_ass, "TVK-AS (MTS) must not be blacklisted"
-    assert "AS50000" not in black_ass, "white-names must win"
+    assert "AS50000" not in black_ass, "!name must win"
 
     txt = repo / "output" / "txt"
     blacklist = lines(txt / "blacklist.txt")
     assert "192.0.2.0/24" in blacklist, "adjacent /25s are collapsed"
-    assert "78.108.192.0/22" in blacklist and "78.108.199.0/24" not in blacklist, "allowlist is cut out"
+    assert "78.108.192.0/22" in blacklist and "78.108.199.0/24" not in blacklist, "!prefix is cut out"
     assert "2a00:bdc0::/29" in blacklist, "IPv6 allocations are matched too"
     assert "80.64.97.53/32" in blacklist, "PTR keyword matches are added"
     assert lines(txt / "blacklist-v6.txt") == ["2a00:bdc0::/29"]
     assert "100.64.0.0/24" not in blacklist
-
-    assert lines(txt / "blacklist-vk.txt") == ["87.240.128.0/18", "203.0.113.0/24", "2a00:bdc0::/29"]
     assert not list(repo.glob(".build.*")), "work dir is cleaned up"
 
 
@@ -138,43 +142,31 @@ def test_failed_build_keeps_published_files(repo):
 
 def test_offline_rebuild_does_not_rewrite_unchanged_files(repo):
     assert build(repo).returncode == 0
-    outputs = [p for d in ("nftables", "ipset", "routes") for p in (repo / "output" / d).iterdir()]
-    assert len(outputs) == 12  # 6 nft + 4 ipset + 2 routes
+    outputs = [p for d in ("nftables", "ipset") for p in (repo / "output" / d).iterdir()]
+    assert len(outputs) == 5  # 3 nft + 2 ipset
     stamps = {p: (p.stat().st_mtime_ns, p.read_bytes()) for p in outputs}
 
     result = build(repo, "--offline", FAIL_NETNAME="1")  # no network lookups in offline mode
     assert result.returncode == 0, result.stderr
     assert {p: (p.stat().st_mtime_ns, p.read_bytes()) for p in outputs} == stamps
 
-    ipset = lines(repo / "output" / "ipset" / "blacklist-vk-v4.ipset")
-    assert "add blacklist-vk-v4-tmp 87.240.128.0/18" in ipset
-    assert ipset[-2:] == ["swap blacklist-vk-v4-tmp blacklist-vk-v4", "destroy blacklist-vk-v4-tmp"]
-    assert "flush set inet filter blacklist_vk_v6" in (repo / "output" / "nftables" / "blacklist-vk-v6.nft").read_text(encoding="utf-8")
+    ipset = lines(repo / "output" / "ipset" / "blacklist-v4.ipset")
+    assert "add blacklist-v4-tmp 87.240.128.0/18" in ipset
+    assert ipset[-2:] == ["swap blacklist-v4-tmp blacklist-v4", "destroy blacklist-v4-tmp"]
+    assert "flush set inet filter blacklist_v6" in (repo / "output" / "nftables" / "blacklist-v6.nft").read_text(encoding="utf-8")
 
 
 def test_custom_asns_and_prefixes_are_added(repo):
-    with open(repo / "config" / "custom-blacklist.txt", "a", encoding="utf-8") as custom:
-        custom.write("as64500  # my ASN\n198.51.100.7  # one host\n2001:db8:1::/48\n")
-
+    add_rules(repo, "as64500  # my ASN", "198.51.100.7  # one host", "2001:db8:1::/48")
     result = build(repo)
     assert result.returncode == 0, result.stderr
 
     assert "AS64500" in lines(repo / "data" / "black_ass.txt")
-    blacklist = lines(repo / "output" / "txt" / "blacklist.txt")
-    assert {"198.18.0.0/24", "198.51.100.7/32", "2001:db8:1::/48"} <= set(blacklist)
-    assert not set(lines(repo / "output" / "txt" / "blacklist-vk.txt")) & {"198.18.0.0/24", "198.51.100.7/32"}
+    assert {"198.18.0.0/24", "198.51.100.7/32", "2001:db8:1::/48"} <= set(lines(repo / "output" / "txt" / "blacklist.txt"))
 
 
-def test_invalid_custom_entry_fails_the_build(repo):
-    with open(repo / "config" / "custom-blacklist.txt", "a", encoding="utf-8") as custom:
-        custom.write("AS 64500\n")
+@pytest.mark.parametrize("rule", ["AS 64500", "nmae fsin", "name broken("])
+def test_bad_rule_fails_before_anything_is_written(repo, rule):
+    add_rules(repo, rule)
     assert build(repo).returncode != 0
-
-
-@pytest.mark.parametrize("name", ["black-names.txt", "vk-names.txt"])
-def test_invalid_pattern_fails_instead_of_matching_nothing(repo, name):
-    with open(repo / "config" / name, "a", encoding="utf-8") as patterns:
-        patterns.write("broken(\n")
-    result = build(repo)
-    assert result.returncode != 0
     assert not (repo / "output" / "txt" / "blacklist.txt").exists()

@@ -19,7 +19,7 @@ LISTS="${TMP}/lists"
 STATE="${TMP}/state"
 CONF="${TMP}/ru-blacklist.conf"
 mkdir -p "${LISTS}"
-for f in blacklist-v4.txt blacklist-v6.txt blacklist-vk-v4.txt blacklist-vk-v6.txt; do
+for f in blacklist-v4.txt blacklist-v6.txt; do
     cp "${REPO_ROOT}/output/txt/${f}" "${LISTS}/${f}"
 done
 
@@ -40,11 +40,7 @@ write_conf() {
 BASE_URL="file://${LISTS}"
 STATE_DIR="${STATE}"
 BACKEND="$1"
-BLOCK_GOV_INPUT="yes"
-BLOCK_VK_FORWARD="yes"
-BLOCK_VK_OUTPUT="${2:-no}"
-VPN_IFACES="${3:-}"
-ALLOW_PREFIXES="${4:-}"
+ALLOW_PREFIXES="${2:-}"
 EOF
 }
 run() { "${UPDATE}" --config "${CONF}" "$@"; }
@@ -52,20 +48,13 @@ nft_table() { nft list table inet ru_blacklist; }
 table_has() { nft_table | grep -q -- "$1"; }
 
 echo "# nftables backend"
-write_conf nftables no "wg0 awg0" "198.51.100.7 2001:db8::/48"
+write_conf nftables "198.51.100.7 2001:db8::/48"
 check_rc "first apply" 0 run
 check "gov_v4 set filled" table_has "elements = {"
 check "input chain drops gov sources" table_has "ip saddr @gov_v4 counter"
-check "forward chain limited to VPN interfaces" table_has 'iifname { "wg0", "awg0" } ip daddr @vk_v4'
 check "allowlist rule present" table_has "ip saddr 198.51.100.7 return"
-check "no output chain by default" sh -c '! nft list table inet ru_blacklist | grep -q "hook output"'
 check_rc "second apply is idempotent" 0 run
 check "state cached" test -s "${STATE}/blacklist-v4.txt"
-
-write_conf nftables yes
-check_rc "apply with BLOCK_VK_OUTPUT" 0 run
-check "output chain present" table_has "hook output"
-check "forward chain covers all traffic without VPN_IFACES" sh -c '! nft list table inet ru_blacklist | grep -q iifname'
 
 nft_table > "${TMP}/before"
 head -n 10 "${REPO_ROOT}/output/txt/blacklist-v4.txt" > "${LISTS}/blacklist-v4.txt"
@@ -89,13 +78,14 @@ check "table removed" sh -c '! nft list table inet ru_blacklist'
 
 echo "# ipset backend"
 rm -rf "${STATE}"
-write_conf ipset no "wg0" "198.51.100.7"
+write_conf ipset "198.51.100.7"
+# A chain left by an older version that also blocked VK traffic.
+iptables -N RU_BL_FORWARD && iptables -A RU_BL_FORWARD -j REJECT
 check_rc "first apply" 0 run
+check "old VK chain emptied" sh -c '[ $(iptables -S RU_BL_FORWARD | wc -l) -eq 1 ]'
 check "gov set filled" sh -c '[ $(ipset list ru-bl-gov-v4 | grep -c "/") -gt 300 ]'
-check "vk v6 set exists" ipset list -n ru-bl-vk-v6
 check "INPUT jumps to our chain" iptables -C INPUT -j RU_BL_INPUT
-check "FORWARD jump in ip6tables" ip6tables -C FORWARD -j RU_BL_FORWARD
-check "forward rule limited to wg0" sh -c 'iptables -S RU_BL_FORWARD | grep -q -- "-i wg0"'
+check "INPUT jump in ip6tables" ip6tables -C INPUT -j RU_BL_INPUT
 check "allowlist rule present" sh -c 'iptables -S RU_BL_INPUT | grep -q "198.51.100.7/32 -j RETURN"'
 check_rc "second apply is idempotent" 0 run
 check "exactly one jump after re-apply" sh -c '[ $(iptables -S INPUT | grep -c RU_BL_INPUT) -eq 1 ]'
