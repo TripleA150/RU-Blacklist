@@ -5,8 +5,8 @@
 # matched case-insensitively against data/all-ru-ipv4.txt, data/all-ru-ipv6.txt
 # and data/ripe-ru-ipv4.txt. Write patterns in lower case.
 
-ru-netbridge-(19911202|20061117)
-odnoklassniki
-vkcompany
-vkontakte
-llc vk
+# ru-netbridge-(19911202|20061117)
+# odnoklassniki
+# vkcompany
+# vkontakte
+# llc vk
