@@ -28,17 +28,17 @@ name ufsb
 # Telecom operator of the penitentiary system
 name zonatelecom
 # VK / Odnoklassniki / Mail.ru
-name llc vk
-name vkontakte
-name ODNOKLASSNIKI
-name VKCOMPANY
-name mail\.ru
-name mail-ru
-name mail_ru
+# name llc vk
+# name vkontakte
+# name ODNOKLASSNIKI
+# name VKCOMPANY
+# name mail\.ru
+# name mail-ru
+# name mail_ru
 # Whole word only: "TVK-AS" (MTS) must not match
-name (^|[^[:alnum:]_-])VK-AS([^[:alnum:]_-]|$)
+# name (^|[^[:alnum:]_-])VK-AS([^[:alnum:]_-]|$)
 # VK's M100 data centre
-name M100
+# name M100
 
 # ---------------------------------------------------------------------------
 # Suggested additions, disabled by default. Remove the leading "#" to enable one.
