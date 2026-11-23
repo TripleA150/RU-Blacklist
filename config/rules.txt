@@ -77,8 +77,17 @@ name ru-netbridge-(19911202|20061117)
 # ===== Name exceptions =====
 !name ruvds
 
-# ===== Your ASNs and prefixes =====
+# ===== CIDR =====
+# Skipa
+85.142.100.0/24
+
+# ===== Your ASNs =====
+
+# National Research Computer Network of Russia
 AS3267
+
+# Sputnik
+AS197571
 
 # Modat scanner
 AS209334
@@ -108,9 +117,6 @@ ptr AS198947
 
 # INETCOM CARRIER LLC
 ptr AS35598
-
-# Selectel
-ptr AS49505
 
 ptr-key (^|[.-])(tspu|sorm|ecofilter|ecosge|skat|dpi|rkn)([0-9.-]|$)
 ptr-key no-hope
