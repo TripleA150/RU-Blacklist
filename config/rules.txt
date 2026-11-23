@@ -112,6 +112,9 @@ ptr AS35598
 ptr-key (^|[.-])(tspu|sorm|ecofilter|ecosge|skat|dpi|rkn)([0-9.-]|$)
 ptr-key no-hope
 ptr-key blackbox
+ptr-key scan-*.skipa.cyberok.ru
+ptr-key skipa
+ptr-key cyberok
 
 # ===== Government netnames (from AntiZapret blacklist4.txt) =====
 #
