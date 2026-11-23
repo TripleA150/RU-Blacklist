@@ -1,7 +1,7 @@
 # IPSet blacklist configuration (inet)
 # Auto-generated from blacklist-v4.txt
-# Last updated: 2026-11-20 11:08:03 UTC
-# Total entries: 1079
+# Last updated: 2026-11-23 12:02:37 UTC
+# Total entries: 1080
 #
 # Usage:
 #   ipset restore < blacklist-v4.ipset      # safe to repeat while rules use the set
@@ -935,6 +935,7 @@ add blacklist-v4-tmp 199.101.196.0/24
 add blacklist-v4-tmp 203.26.81.0/24
 add blacklist-v4-tmp 203.159.81.0/24
 add blacklist-v4-tmp 203.188.168.0/24
+add blacklist-v4-tmp 209.206.29.0/27
 add blacklist-v4-tmp 212.13.104.116/30
 add blacklist-v4-tmp 212.13.113.100/30
 add blacklist-v4-tmp 212.15.105.64/28
