@@ -109,6 +109,9 @@ ptr AS198947
 # INETCOM CARRIER LLC
 ptr AS35598
 
+# Selectel
+ptr AS49505
+
 ptr-key (^|[.-])(tspu|sorm|ecofilter|ecosge|skat|dpi|rkn)([0-9.-]|$)
 ptr-key no-hope
 ptr-key blackbox
