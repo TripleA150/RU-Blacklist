@@ -154830,8 +154830,6 @@
 176.119.197.128/25 CT-NOVOKUBANSK-PPPOE1 mnt-ru-citytelekom-1 () [CityTelekom Ltd. PPPoE address pool]
 188.170.127.0/24 MF-UF-KIRRO-14072022 MF-UGSM-MNT MEGAFON-AUTO-MNT () [Ural Branch of OJSC MegaFon Kirov]
 93.153.223.36/30 VOL-MAURINO-LAN PSTAR-MNT () [VOL Maurino 6212103648 St.Petersburg JSC PeterStar]
-176.119.218.0/25 E-PUBLISH-NET mnt-ru-e-publish-1 () []
-176.119.218.128/25 E-PUBLISH-NET mnt-ru-e-publish-1 () []
 93.153.233.112/30 VODOKANAL-LAN PSTAR-MNT () [VODOKANAL network St.Petersburg JSC PeterStar]
 85.192.1.0/24 DINET DN-MNT () []
 109.124.110.88/30 LEADERSNAB-LAN PSTAR-MNT () [KLN-Telman-87 Kaliningrad JSC PeterStar]
@@ -191085,3 +191083,4 @@
 177.29.205.0/24 LARUS-MEDIA-GROUP hk-larus-1-mnt () []
 177.29.206.0/24 LARUS-MEDIA-GROUP hk-larus-1-mnt () []
 177.29.207.0/24 LARUS-MEDIA-GROUP hk-larus-1-mnt () []
+185.228.74.0/24 SPB-NET intermanaged () []

@@ -1355153,24 +1355153,6 @@
     },
     {
         "inetnum": [
-            "176.119.218.0/25"
-        ],
-        "descr": "",
-        "netname": "E-PUBLISH-NET mnt-ru-e-publish-1",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
-            "176.119.218.128/25"
-        ],
-        "descr": "",
-        "netname": "E-PUBLISH-NET mnt-ru-e-publish-1",
-        "country": "RU",
-        "org": ""
-    },
-    {
-        "inetnum": [
             "93.153.233.112/30"
         ],
         "descr": "VODOKANAL network St.Petersburg JSC PeterStar",
@@ -1661515,6 +1661497,15 @@
         ],
         "descr": "",
         "netname": "LARUS-MEDIA-GROUP hk-larus-1-mnt",
+        "country": "RU",
+        "org": ""
+    },
+    {
+        "inetnum": [
+            "185.228.74.0/24"
+        ],
+        "descr": "",
+        "netname": "SPB-NET intermanaged",
         "country": "RU",
         "org": ""
     }
