@@ -49,6 +49,20 @@ print("78.108.192.0/21")
 """
 
 
+# The VK patterns the tests check, fixed here so disabling them in config/rules.txt does not break the tests.
+VK_RULES = [
+    "name llc vk",
+    "name vkontakte",
+    "name ODNOKLASSNIKI",
+    "name VKCOMPANY",
+    r"name mail\.ru",
+    "name mail-ru",
+    "name mail_ru",
+    "name (^|[^[:alnum:]_-])VK-AS([^[:alnum:]_-]|$)",
+    "name M100",
+]
+
+
 @pytest.fixture
 def repo(tmp_path):
     shutil.copytree(REPO / "scripts", tmp_path / "scripts")
@@ -56,7 +70,8 @@ def repo(tmp_path):
     # Keep the real name patterns under test, but not your own ASNs, prefixes and PTR targets.
     kept = [line for line in lines(REPO / "config" / "rules.txt") if line.startswith(("name ", "!name "))]
     (tmp_path / "config").mkdir()
-    (tmp_path / "config" / "rules.txt").write_text("\n".join([*kept, "ptr 80.64.96.0/20", "ptr-key tspu", ""]), encoding="utf-8")
+    rules = [*kept, *VK_RULES, "ptr 80.64.96.0/20", "ptr-key tspu", ""]
+    (tmp_path / "config" / "rules.txt").write_text("\n".join(rules), encoding="utf-8")
     (tmp_path / "data").mkdir()
     for name, content in DATA.items():
         (tmp_path / "data" / name).write_text("".join(f"{line}\n" for line in content), encoding="utf-8")
