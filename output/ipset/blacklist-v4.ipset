@@ -1,6 +1,6 @@
 # IPSet blacklist configuration (inet)
 # Auto-generated from blacklist-v4.txt
-# Last updated: 2026-11-25 12:21:47 UTC
+# Last updated: 2026-11-26 12:06:09 UTC
 # Total entries: 1086
 #
 # Usage:
@@ -65,6 +65,7 @@ add blacklist-v4-tmp 41.180.137.0/24
 add blacklist-v4-tmp 41.180.138.0/23
 add blacklist-v4-tmp 41.180.148.0/22
 add blacklist-v4-tmp 41.180.160.0/24
+add blacklist-v4-tmp 41.180.172.0/23
 add blacklist-v4-tmp 45.8.19.0/24
 add blacklist-v4-tmp 45.8.68.0/24
 add blacklist-v4-tmp 45.38.57.0/24
@@ -189,7 +190,6 @@ add blacklist-v4-tmp 79.133.75.176/30
 add blacklist-v4-tmp 79.142.88.0/28
 add blacklist-v4-tmp 79.176.10.0/24
 add blacklist-v4-tmp 79.176.79.0/24
-add blacklist-v4-tmp 80.46.128.0/24
 add blacklist-v4-tmp 80.46.138.0/24
 add blacklist-v4-tmp 80.64.97.53/32
 add blacklist-v4-tmp 80.64.97.55/32
@@ -318,6 +318,7 @@ add blacklist-v4-tmp 83.69.207.248/29
 add blacklist-v4-tmp 83.98.180.0/24
 add blacklist-v4-tmp 83.98.188.0/24
 add blacklist-v4-tmp 83.98.202.0/23
+add blacklist-v4-tmp 83.98.212.0/24
 add blacklist-v4-tmp 83.149.42.64/29
 add blacklist-v4-tmp 83.149.192.0/18
 add blacklist-v4-tmp 83.172.36.224/29
@@ -621,6 +622,7 @@ add blacklist-v4-tmp 104.234.19.0/24
 add blacklist-v4-tmp 104.234.32.0/24
 add blacklist-v4-tmp 104.234.53.0/24
 add blacklist-v4-tmp 107.178.55.0/24
+add blacklist-v4-tmp 107.182.126.0/23
 add blacklist-v4-tmp 109.66.24.0/24
 add blacklist-v4-tmp 109.66.143.0/24
 add blacklist-v4-tmp 109.73.4.224/27
@@ -675,7 +677,6 @@ add blacklist-v4-tmp 145.63.161.0/24
 add blacklist-v4-tmp 145.63.163.0/24
 add blacklist-v4-tmp 145.63.165.0/24
 add blacklist-v4-tmp 145.63.168.0/24
-add blacklist-v4-tmp 145.63.172.0/24
 add blacklist-v4-tmp 145.63.177.0/24
 add blacklist-v4-tmp 145.63.181.0/24
 add blacklist-v4-tmp 145.63.184.0/24
@@ -725,7 +726,6 @@ add blacklist-v4-tmp 158.173.120.0/24
 add blacklist-v4-tmp 158.173.122.0/24
 add blacklist-v4-tmp 158.173.124.0/24
 add blacklist-v4-tmp 158.173.126.0/24
-add blacklist-v4-tmp 158.173.185.0/24
 add blacklist-v4-tmp 158.173.200.0/24
 add blacklist-v4-tmp 158.173.202.0/24
 add blacklist-v4-tmp 158.173.207.0/24
